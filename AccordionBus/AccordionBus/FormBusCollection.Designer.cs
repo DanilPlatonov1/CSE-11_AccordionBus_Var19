@@ -31,7 +31,6 @@
             groupBoxTools = new GroupBox();
             panelCompanyTools = new Panel();
             buttonAddBus = new Button();
-            buttonAddAccordionBus = new Button();
             maskedTextBoxPosition = new MaskedTextBox();
             buttonRefresh = new Button();
             buttonDelBus = new Button();
@@ -71,16 +70,15 @@
             // panelCompanyTools
             // 
             panelCompanyTools.Controls.Add(buttonAddBus);
-            panelCompanyTools.Controls.Add(buttonAddAccordionBus);
             panelCompanyTools.Controls.Add(maskedTextBoxPosition);
             panelCompanyTools.Controls.Add(buttonRefresh);
             panelCompanyTools.Controls.Add(buttonDelBus);
             panelCompanyTools.Controls.Add(buttonGoToCheck);
             panelCompanyTools.Dock = DockStyle.Bottom;
             panelCompanyTools.Enabled = false;
-            panelCompanyTools.Location = new Point(3, 293);
+            panelCompanyTools.Location = new Point(3, 441);
             panelCompanyTools.Name = "panelCompanyTools";
-            panelCompanyTools.Size = new Size(225, 303);
+            panelCompanyTools.Size = new Size(225, 155);
             panelCompanyTools.TabIndex = 10;
             // 
             // buttonAddBus
@@ -94,20 +92,9 @@
             buttonAddBus.UseVisualStyleBackColor = true;
             buttonAddBus.Click += ButtonAddBus_Click;
             // 
-            // buttonAddAccordionBus
-            // 
-            buttonAddAccordionBus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            buttonAddAccordionBus.Location = new Point(4, 38);
-            buttonAddAccordionBus.Name = "buttonAddAccordionBus";
-            buttonAddAccordionBus.Size = new Size(212, 25);
-            buttonAddAccordionBus.TabIndex = 2;
-            buttonAddAccordionBus.Text = "Добавление автобуса с гармошкой";
-            buttonAddAccordionBus.UseVisualStyleBackColor = true;
-            buttonAddAccordionBus.Click += ButtonAddAccordionBus_Click;
-            // 
             // maskedTextBoxPosition
             // 
-            maskedTextBoxPosition.Location = new Point(4, 69);
+            maskedTextBoxPosition.Location = new Point(4, 38);
             maskedTextBoxPosition.Mask = "00";
             maskedTextBoxPosition.Name = "maskedTextBoxPosition";
             maskedTextBoxPosition.Size = new Size(212, 23);
@@ -117,7 +104,7 @@
             // buttonRefresh
             // 
             buttonRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            buttonRefresh.Location = new Point(4, 156);
+            buttonRefresh.Location = new Point(4, 125);
             buttonRefresh.Name = "buttonRefresh";
             buttonRefresh.Size = new Size(209, 22);
             buttonRefresh.TabIndex = 7;
@@ -128,7 +115,7 @@
             // buttonDelBus
             // 
             buttonDelBus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            buttonDelBus.Location = new Point(4, 98);
+            buttonDelBus.Location = new Point(4, 67);
             buttonDelBus.Name = "buttonDelBus";
             buttonDelBus.Size = new Size(209, 23);
             buttonDelBus.TabIndex = 5;
@@ -139,7 +126,7 @@
             // buttonGoToCheck
             // 
             buttonGoToCheck.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            buttonGoToCheck.Location = new Point(4, 127);
+            buttonGoToCheck.Location = new Point(4, 96);
             buttonGoToCheck.Name = "buttonGoToCheck";
             buttonGoToCheck.Size = new Size(209, 23);
             buttonGoToCheck.TabIndex = 6;
@@ -283,7 +270,6 @@
         private ComboBox comboBoxSelectorCompany;
         private Button buttonDelBus;
         private MaskedTextBox maskedTextBoxPosition;
-        private Button buttonAddAccordionBus;
         private Button buttonAddBus;
         private PictureBox pictureBox;
         private Button buttonRefresh;

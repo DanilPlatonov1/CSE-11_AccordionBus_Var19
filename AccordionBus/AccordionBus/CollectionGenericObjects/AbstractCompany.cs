@@ -66,9 +66,9 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
     /// <param name="company">Компания</param>
     /// <param name="position">Номер удаляемого объекта</param>
     /// <returns></returns>
-    public static DrawningBus operator -(AbstractCompany company, int position)
+    public static DrawningBus operator -(AbstractCompany? company, int position)
     {
-        return company?._collection?.Remove(position);
+        return company._collection.Remove(position);
     }
     /// <summary>
     /// Получение случайного объекта из коллекции

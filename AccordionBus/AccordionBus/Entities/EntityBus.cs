@@ -42,4 +42,8 @@ public class EntityBus
         Weight = weight;
         BodyColor = bodyColor;
     }
+    public void SetBody(Color color)
+    {
+        BodyColor = color;
+    }
 }

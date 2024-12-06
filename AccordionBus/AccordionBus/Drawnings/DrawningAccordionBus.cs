@@ -1,4 +1,10 @@
-﻿using System.Drawing.Drawing2D;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Drawing2D;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AccordionBus.Drawnings;
 using AccordionBus.Entities;
 
 namespace AccordionBus.Drawnings;
@@ -15,7 +21,7 @@ public class DrawningAccordionBus:DrawningBus
     /// /// <param name="garmoshka">Признак наличия гармошки</param>
    
     public DrawningAccordionBus(int speed, double weight, Color bodyColor, Color
-        additionalColor, bool bodyGlass,bool garmoshka): base(200, 40)
+    additionalColor, bool bodyGlass,bool garmoshka): base(200, 40)
     {
         EntityBus = new EntityAccordionBus(speed, weight, bodyColor, additionalColor,
         bodyGlass, garmoshka);

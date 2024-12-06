@@ -39,8 +39,10 @@ public class EntityAccordionBus: EntityBus
     /// <param name="speed">скрость</param>
     /// <param name="weigth">вес</param>
     /// <param name="bodyColor">основной цвет</param>
-    public EntityAccordionBus(int speed, double weigth, Color bodyColor) : base(speed, weigth, bodyColor)
-    {
+    public EntityAccordionBus(int speed, double weigth, Color bodyColor) : base(speed, weigth, bodyColor){}
 
+    public void SetAdditional(Color color)
+    {
+        AdditionalColor = color;
     }
 }

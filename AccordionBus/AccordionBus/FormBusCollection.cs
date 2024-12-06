@@ -29,6 +29,20 @@ public partial class FormBusCollection : Form
         InitializeComponent();
         _storageCollection = new();
     }
+
+    private void SetBus(DrawningBus bus)
+    {
+        if (_company == null || bus == null) return;
+        if (_company + bus)
+        {
+            MessageBox.Show("Объект добавлен");
+            pictureBox.Image = _company.Show();
+        }
+        else
+        {
+            MessageBox.Show("Не удалось добавить объект");
+        }
+    }
     /// <summary>
     /// Выбор компании
     /// </summary>
@@ -43,61 +57,10 @@ public partial class FormBusCollection : Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ButtonAddBus_Click(object sender, EventArgs e) => CreateObject(nameof(DrawningBus));
-    /// <summary>
-    /// Добавление спортивного автомобиля
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void ButtonAddAccordionBus_Click(object sender, EventArgs e) => CreateObject(nameof(DrawningAccordionBus));
-    /// <summary>
-    /// Создание объекта класса-перемещения
-    /// </summary>
-    /// <param name="type">Тип создаваемого объекта</param>
-    private void CreateObject(string type)
-    {
-        if (_company == null)
-        {
-            return;
-        }
-        Random random = new();
-        DrawningBus drawningBus;
-        switch (type)
-        {
-            case nameof(DrawningBus):
-                drawningBus = new DrawningBus(random.Next(100, 300), random.Next(1000, 3000), GetColor(random));
-                break;
-            case nameof(DrawningAccordionBus):
-                drawningBus = new DrawningAccordionBus(random.Next(100, 300),random.Next(1000, 3000),GetColor(random),GetColor(random), Convert.ToBoolean(random.Next(0, 2)), Convert.ToBoolean(random.Next(0, 2)));
-                break;
-            default:
-                return;
-        }
-        if (_company + drawningBus)
-        {
-            MessageBox.Show("Объект добавлен");
-            pictureBox.Image = _company.Show();
-        }
-        else
-        {
-            MessageBox.Show("Не удалось добавить объект");
-        }
-    }
-    /// <summary>
-    /// Получение цвета
-    /// </summary>
-    /// <param name="random">Генератор случайных чисел</param>
-    /// <returns></returns>
-    private static Color GetColor(Random random)
-    {
-        Color color = Color.FromArgb(random.Next(0, 256), random.Next(0,
-        256), random.Next(0, 256));
-        ColorDialog dialog = new();
-        if (dialog.ShowDialog() == DialogResult.OK)
-        {
-            color = dialog.Color;
-        }
-        return color;
+    private void ButtonAddBus_Click(object sender, EventArgs e) {
+        FormBusConfig form = new();
+        form.Show();
+        form.AddEvent(SetBus);
     }
     /// <summary>
     /// Удаление объекта
@@ -214,7 +177,7 @@ public partial class FormBusCollection : Form
         {
             return;
         }
-        _storageCollection.DelCollection(listBoxCollection.SelectedItem.ToString() ?? string.Empty);
+        _storageCollection.DelCollection(listBoxCollection.SelectedItem.ToString());
         RefreshListBoxItems();
     }
     private void buttonCreateCompany_Click(object sender, EventArgs e)
