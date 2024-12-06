@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AccordionBus.Drawnings;
+﻿using System.Drawing.Drawing2D;
 using AccordionBus.Entities;
 
 namespace AccordionBus.Drawnings;
@@ -21,7 +15,7 @@ public class DrawningAccordionBus:DrawningBus
     /// /// <param name="garmoshka">Признак наличия гармошки</param>
    
     public DrawningAccordionBus(int speed, double weight, Color bodyColor, Color
-    additionalColor, bool bodyGlass,bool garmoshka): base(200, 40)
+        additionalColor, bool bodyGlass,bool garmoshka): base(200, 40)
     {
         EntityBus = new EntityAccordionBus(speed, weight, bodyColor, additionalColor,
         bodyGlass, garmoshka);
@@ -62,16 +56,16 @@ public class DrawningAccordionBus:DrawningBus
         //стекла
         if (accordionBus.BodyGlass)
         {
-            Brush brGlass = new SolidBrush(accordionBus.AdditionalColor);
-            g.FillEllipse(brGlass, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
-            g.FillEllipse(brGlass, _startPosX.Value + 65, _startPosY.Value + 5, 10, 15);
+            Brush brBlue = new SolidBrush(accordionBus.AdditionalColor);
+            g.FillEllipse(brBlue, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
+            g.FillEllipse(brBlue, _startPosX.Value + 65, _startPosY.Value + 5, 10, 15);
             Pen penGlass = new Pen(Color.Black);
             g.DrawEllipse(penGlass, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
             g.DrawEllipse(penGlass, _startPosX.Value + 65, _startPosY.Value + 5, 10, 15);
             if (accordionBus.BodyGarmoshka)
             {
-                g.FillEllipse(brGlass, _startPosX.Value + 135, _startPosY.Value + 5, 10, 15);
-                g.FillEllipse(brGlass, _startPosX.Value + 185, _startPosY.Value + 5, 10, 15);
+                g.FillEllipse(brBlue, _startPosX.Value + 135, _startPosY.Value + 5, 10, 15);
+                g.FillEllipse(brBlue, _startPosX.Value + 185, _startPosY.Value + 5, 10, 15);
                 g.DrawEllipse(penGlass, _startPosX.Value + 135, _startPosY.Value + 5, 10, 15);
                 g.DrawEllipse(penGlass, _startPosX.Value + 185, _startPosY.Value + 5, 10, 15);
             }

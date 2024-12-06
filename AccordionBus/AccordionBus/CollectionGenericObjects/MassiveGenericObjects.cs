@@ -46,9 +46,9 @@ where T : class
     }
     public int Insert(T obj) // вставка объекта на свободное место
     {
-        for (int i = 0; i < _collection.Length; ++i)
+        for(int i=0; i < _collection.Length; ++i)
         {
-            if (_collection[i] == null)
+            if (_collection[i]==null)
             {
                 _collection[i] = obj;
                 return i;
@@ -67,9 +67,9 @@ where T : class
         }
         else
         {
-            for (int i = position; i < _collection.Length; ++i) //ищем свободное место справа
+            for(int i=position; i< _collection.Length; ++i) //ищем свободное место справа
             {
-                if (_collection[i] == null)
+                if(_collection[i]==null)
                 {
                     _collection[i] = obj;
                     return i;
@@ -90,8 +90,8 @@ where T : class
     {
         if (position < 0 || position >= _collection.Length || _collection[position] == null)
             return null;
-        T? temp = _collection[position];
-        _collection[position] = null;
+        T ?temp = _collection[position];
+        _collection[position]=null;
         return temp;
     }
 

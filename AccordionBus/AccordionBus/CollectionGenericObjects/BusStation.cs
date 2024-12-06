@@ -36,23 +36,23 @@ public class BusStation : AbstractCompany
     }
     protected override void SetObjectsPosition()
     {
-        int posX = _pictureWidth / _placeSizeWidth - 1;
-        int posY = _pictureHeight / _placeSizeHeight - 1;
+        int posX = 0;
+        int posY = _pictureHeight / _placeSizeHeight-1;
         for (int i = 0; i < _collection?.Count; i++)
         {
             if (_collection.Get(i) != null)
             {
                 _collection?.Get(i)?.SetPictureSize(_pictureWidth, _pictureHeight);
-                _collection?.Get(i)?.SetPosition(posX * _placeSizeWidth + 5, posY * _placeSizeHeight + 5);
+                _collection?.Get(i)?.SetPosition(posX * _placeSizeWidth+5, posY * _placeSizeHeight+5);
             }
-            if (posX > 0)
+            if (posY > 0)
             {
-                posX--;
+                posY--;
             }
             else
             {
-                posY--;
-                posX = _pictureWidth / _placeSizeWidth - 1;
+                posX++;
+                posY = _pictureHeight / _placeSizeHeight-1;
             }
             if (posY < 0) { return; }
         }

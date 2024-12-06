@@ -36,7 +36,7 @@ public abstract class AbstractCompany
     /// <summary>
     /// Вычисление максимального количества элементов, который можно разместить в окне
     /// </summary>
-private int GetMaxCount => (_pictureWidth * _pictureHeight) / (_placeSizeWidth * _placeSizeHeight);
+private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _placeSizeHeight);
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -56,9 +56,9 @@ private int GetMaxCount => (_pictureWidth * _pictureHeight) / (_placeSizeWidth *
     /// <param name="company">Компания</param>
     /// <param name="car">Добавляемый объект</param>
     /// <returns></returns>
-    public static int operator +(AbstractCompany company, DrawningBus bus)
+    public static bool operator +(AbstractCompany company, DrawningBus bus)
     {
-        return company._collection.Insert(bus);
+        return company._collection?.Insert(bus)!=-1? true : false;
     }
     /// <summary>
     /// Перегрузка оператора удаления для класса
@@ -68,7 +68,7 @@ private int GetMaxCount => (_pictureWidth * _pictureHeight) / (_placeSizeWidth *
     /// <returns></returns>
     public static DrawningBus operator -(AbstractCompany company, int position)
     {
-        return company._collection.Remove(position);
+        return company?._collection?.Remove(position);
     }
     /// <summary>
     /// Получение случайного объекта из коллекции
