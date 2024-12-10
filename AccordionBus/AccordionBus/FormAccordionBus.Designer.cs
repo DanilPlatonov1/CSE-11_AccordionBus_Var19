@@ -41,7 +41,7 @@
             pictureBoxAccordionBus.Dock = DockStyle.Fill;
             pictureBoxAccordionBus.Location = new Point(0, 0);
             pictureBoxAccordionBus.Name = "pictureBoxAccordionBus";
-            pictureBoxAccordionBus.Size = new Size(714, 390);
+            pictureBoxAccordionBus.Size = new Size(1044, 511);
             pictureBoxAccordionBus.SizeMode = PictureBoxSizeMode.AutoSize;
             pictureBoxAccordionBus.TabIndex = 5;
             pictureBoxAccordionBus.TabStop = false;
@@ -51,7 +51,7 @@
             buttonUp.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonUp.BackgroundImage = (Image)resources.GetObject("buttonUp.BackgroundImage");
             buttonUp.BackgroundImageLayout = ImageLayout.Zoom;
-            buttonUp.Location = new Point(626, 308);
+            buttonUp.Location = new Point(956, 429);
             buttonUp.Name = "buttonUp";
             buttonUp.Size = new Size(35, 35);
             buttonUp.TabIndex = 7;
@@ -64,7 +64,7 @@
             buttonLeft.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonLeft.BackgroundImage = (Image)resources.GetObject("buttonLeft.BackgroundImage");
             buttonLeft.BackgroundImageLayout = ImageLayout.Zoom;
-            buttonLeft.Location = new Point(585, 349);
+            buttonLeft.Location = new Point(915, 470);
             buttonLeft.Name = "buttonLeft";
             buttonLeft.Size = new Size(35, 35);
             buttonLeft.TabIndex = 8;
@@ -77,7 +77,7 @@
             buttonDown.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonDown.BackgroundImage = (Image)resources.GetObject("buttonDown.BackgroundImage");
             buttonDown.BackgroundImageLayout = ImageLayout.Zoom;
-            buttonDown.Location = new Point(626, 349);
+            buttonDown.Location = new Point(956, 470);
             buttonDown.Name = "buttonDown";
             buttonDown.Size = new Size(35, 35);
             buttonDown.TabIndex = 9;
@@ -90,7 +90,7 @@
             buttonRight.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             buttonRight.BackgroundImage = (Image)resources.GetObject("buttonRight.BackgroundImage");
             buttonRight.BackgroundImageLayout = ImageLayout.Zoom;
-            buttonRight.Location = new Point(667, 349);
+            buttonRight.Location = new Point(997, 470);
             buttonRight.Name = "buttonRight";
             buttonRight.Size = new Size(35, 35);
             buttonRight.TabIndex = 10;
@@ -104,7 +104,7 @@
             comboBoxStrategy.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxStrategy.FormattingEnabled = true;
             comboBoxStrategy.Items.AddRange(new object[] { "К центру", "К краю" });
-            comboBoxStrategy.Location = new Point(581, 12);
+            comboBoxStrategy.Location = new Point(911, 12);
             comboBoxStrategy.Name = "comboBoxStrategy";
             comboBoxStrategy.Size = new Size(121, 23);
             comboBoxStrategy.TabIndex = 12;
@@ -112,9 +112,9 @@
             // buttonStrategyStep
             // 
             buttonStrategyStep.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            buttonStrategyStep.Location = new Point(627, 41);
+            buttonStrategyStep.Location = new Point(911, 41);
             buttonStrategyStep.Name = "buttonStrategyStep";
-            buttonStrategyStep.Size = new Size(75, 23);
+            buttonStrategyStep.Size = new Size(121, 23);
             buttonStrategyStep.TabIndex = 13;
             buttonStrategyStep.Text = "Шаг";
             buttonStrategyStep.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(714, 390);
+            ClientSize = new Size(1044, 511);
             Controls.Add(buttonStrategyStep);
             Controls.Add(comboBoxStrategy);
             Controls.Add(buttonRight);

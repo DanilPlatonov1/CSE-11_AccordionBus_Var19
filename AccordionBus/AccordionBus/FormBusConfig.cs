@@ -47,25 +47,28 @@ public partial class FormBusConfig : Form
         e.Effect = e.Data?.GetDataPresent(DataFormats.Text) ?? false ? e.Effect = DragDropEffects.Copy : e.Effect = DragDropEffects.None;
     }
 
-    private void PanelObject_DragDrop(object sender, DragEventArgs e)
+private void PanelObject_DragDrop(object sender, DragEventArgs e)
+{
+    switch (e.Data?.GetData(DataFormats.Text)?.ToString())
     {
-        switch (e.Data?.GetData(DataFormats.Text)?.ToString())
-        {
-            case "labelSimpleObject":
-                _bus = new DrawningBus((int)numericUpDownSpeed.Value,
-                (double)numericUpDownWeight.Value, Color.White);
-                break;
-            case "labelModifiedObject":
-                _bus = new
-                DrawningAccordionBus((int)numericUpDownSpeed.Value, (double)numericUpDownWeight.Value,
+        case "labelSimpleObject":
+            _bus = new DrawningBus(
+                (int)numericUpDownSpeed.Value,
+                (double)numericUpDownWeight.Value, 
+                Color.White);
+            break;
+        case "labelModifiedObject":
+            _bus = new DrawningAccordionBus(
+                (int)numericUpDownSpeed.Value, 
+                (double)numericUpDownWeight.Value,
                 Color.White,
-                Color.Black, checkBoxGlass.Checked,
+                Color.Black, 
+                checkBoxGlass.Checked, 
                 checkBoxGarmoshka.Checked);
-                break;
-        }
-        DrawObject();
-
+            break;
     }
+    DrawObject();
+}
 
     private void Panel_MouseDown(object? sender, MouseEventArgs e)
     {

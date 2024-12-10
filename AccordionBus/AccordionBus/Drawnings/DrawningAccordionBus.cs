@@ -39,43 +39,91 @@ public class DrawningAccordionBus:DrawningBus
 
     public override void DrawTransport(Graphics g)
     {
-        if(EntityBus == null || EntityBus is not EntityAccordionBus accordionBus || !_startPosX.HasValue || !_startPosY.HasValue) 
+        if (EntityBus == null || EntityBus is not EntityAccordionBus accordionBus || !_startPosX.HasValue || !_startPosY.HasValue)
             return;
+
+        // Вызов базового метода для отрисовки первого автобуса
         base.DrawTransport(g);
-        //гармошка
-        if (accordionBus.BodyGarmoshka)
-        {
-            g.FillRectangle(new HatchBrush(HatchStyle.Vertical, Color.Black, EntityBus.BodyColor), _startPosX.Value + 90, _startPosY.Value, 40, 30);
-            g.DrawRectangle(new Pen(Color.Black), _startPosX.Value, _startPosY.Value, 90, 30);
-            g.DrawRectangle(new Pen(Color.Black), _startPosX.Value + 90, _startPosY.Value, 40, 30);
-            g.FillRectangle(new SolidBrush(accordionBus.BodyColor), _startPosX.Value + 130, _startPosY.Value, 70, 30);
-            g.DrawRectangle(new Pen(Color.Black), _startPosX.Value + 130, _startPosY.Value, 70, 30);
-            g.FillRectangle(new SolidBrush(Color.Black), _startPosX.Value + 155, _startPosY.Value + 10, 5, 20);
-            g.FillRectangle(new SolidBrush(Color.Black), _startPosX.Value + 175, _startPosY.Value + 10, 5, 20);
-            g.DrawEllipse(new Pen(Color.Black), _startPosX.Value + 130, _startPosY.Value + 25, 20, 15);
-            g.DrawEllipse(new Pen(Color.Black), _startPosX.Value + 180, _startPosY.Value + 25, 20, 15);
-            g.FillEllipse(new SolidBrush(Color.Black), _startPosX.Value + 130, _startPosY.Value + 25, 20, 15);
-            g.FillEllipse(new SolidBrush(Color.Black), _startPosX.Value + 180, _startPosY.Value + 25, 20, 15);
-            g.FillEllipse(new SolidBrush(Color.Black), _startPosX.Value + 130, _startPosY.Value + 25, 20, 15);
-            g.FillEllipse(new SolidBrush(Color.Black), _startPosX.Value + 180, _startPosY.Value + 25, 20, 15);
-        }
-        //стекла
+
+        // Окна и двери первого автобуса
         if (accordionBus.BodyGlass)
         {
-            Brush brBlue = new SolidBrush(accordionBus.AdditionalColor);
-            g.FillEllipse(brBlue, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
-            g.FillEllipse(brBlue, _startPosX.Value + 65, _startPosY.Value + 5, 10, 15);
-            Pen penGlass = new Pen(Color.Black);
-            g.DrawEllipse(penGlass, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
-            g.DrawEllipse(penGlass, _startPosX.Value + 65, _startPosY.Value + 5, 10, 15);
-            if (accordionBus.BodyGarmoshka)
+            // Прямоугольные окна первого автобуса
+            Brush glassBrush = new SolidBrush(accordionBus.AdditionalColor);
+            g.FillRectangle(glassBrush, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
+            g.FillRectangle(glassBrush, _startPosX.Value + 70, _startPosY.Value + 5, 10, 15);
+
+            Pen glassPen = new Pen(Color.Black);
+            g.DrawRectangle(glassPen, _startPosX.Value + 10, _startPosY.Value + 5, 10, 15);
+            g.DrawRectangle(glassPen, _startPosX.Value + 70, _startPosY.Value + 5, 10, 15);
+        }
+
+        // Двери первого автобуса
+        LinearGradientBrush doorBrush = new LinearGradientBrush(
+            new Rectangle(_startPosX.Value + 40, _startPosY.Value + 10, 10, 20), // Ширина двери
+            Color.Black,
+            Color.Gray,
+            LinearGradientMode.Vertical
+        );
+
+        // Гармошка и второй автобус
+        if (accordionBus.BodyGarmoshka)
+        {
+            int accordionWidth = 20;
+            int accordionHeight = 25;
+
+            // Отрисовка частой гармошки
+            HatchBrush accordionBrush = new HatchBrush(HatchStyle.Vertical, Color.Black, EntityBus.BodyColor);
+            g.FillRectangle(accordionBrush, _startPosX.Value + 90, _startPosY.Value + 2, accordionWidth, accordionHeight);
+            g.DrawRectangle(new Pen(Color.Black, 1), _startPosX.Value + 90, _startPosY.Value + 2, accordionWidth, accordionHeight);
+
+            // Отрисовка второго автобуса
+            int secondBusStartX = _startPosX.Value + 90 + accordionWidth;
+            int busWidth = 90;
+            int busHeight = 30;
+
+            Brush secondBusBrush = new SolidBrush(accordionBus.BodyColor);
+            g.FillRectangle(secondBusBrush, secondBusStartX, _startPosY.Value, busWidth, busHeight);
+            g.DrawRectangle(new Pen(Color.Black, 2), secondBusStartX, _startPosY.Value, busWidth, busHeight);
+
+            // Полосы на втором автобусе
+            Pen stripePen = new Pen(Color.DarkGray, 1);
+            g.DrawLine(stripePen, secondBusStartX + 5, _startPosY.Value + 10, secondBusStartX + busWidth - 5, _startPosY.Value + 10);
+            g.DrawLine(stripePen, secondBusStartX + 5, _startPosY.Value + 20, secondBusStartX + busWidth - 5, _startPosY.Value + 20);
+
+            // Колеса второго автобуса
+            int diskDiameter = 20;
+            Brush wheelBrush = new SolidBrush(Color.Gray);
+            g.FillEllipse(wheelBrush, secondBusStartX + 5, _startPosY.Value + 25, diskDiameter, diskDiameter);
+            g.FillEllipse(wheelBrush, secondBusStartX + 65, _startPosY.Value + 25, diskDiameter, diskDiameter);
+
+            Pen wheelOutlinePen = new Pen(Color.Black, 1);
+            g.DrawEllipse(wheelOutlinePen, secondBusStartX + 5, _startPosY.Value + 25, diskDiameter, diskDiameter);
+            g.DrawEllipse(wheelOutlinePen, secondBusStartX + 65, _startPosY.Value + 25, diskDiameter, diskDiameter);
+
+            // Шины второго автобуса
+            Brush tireBrush = new SolidBrush(Color.Black);
+            int tireDiameter = 16;
+            g.FillEllipse(tireBrush, secondBusStartX + 7, _startPosY.Value + 27, tireDiameter, tireDiameter);
+            g.FillEllipse(tireBrush, secondBusStartX + 67, _startPosY.Value + 27, tireDiameter, tireDiameter);
+
+            // Окна второго автобуса
+            if (accordionBus.BodyGlass)
             {
-                g.FillEllipse(brBlue, _startPosX.Value + 135, _startPosY.Value + 5, 10, 15);
-                g.FillEllipse(brBlue, _startPosX.Value + 185, _startPosY.Value + 5, 10, 15);
-                g.DrawEllipse(penGlass, _startPosX.Value + 135, _startPosY.Value + 5, 10, 15);
-                g.DrawEllipse(penGlass, _startPosX.Value + 185, _startPosY.Value + 5, 10, 15);
+                // Прямоугольные окна второго автобуса
+                Brush glassBrush = new SolidBrush(accordionBus.AdditionalColor);
+                g.FillRectangle(glassBrush, secondBusStartX + 10, _startPosY.Value + 5, 10, 15);
+                g.FillRectangle(glassBrush, secondBusStartX + 70, _startPosY.Value + 5, 10, 15);
+
+                Pen glassPen = new Pen(Color.Black);
+                g.DrawRectangle(glassPen, secondBusStartX + 10, _startPosY.Value + 5, 10, 15);
+                g.DrawRectangle(glassPen, secondBusStartX + 70, _startPosY.Value + 5, 10, 15);
             }
+
+            // Широкая дверь второго автобуса
+            g.FillRectangle(doorBrush, secondBusStartX + 40, _startPosY.Value + 10, 10, 20);
+            g.DrawRectangle(new Pen(Color.Black, 1), secondBusStartX + 40, _startPosY.Value + 10, 10, 20);
         }
     }
 }
- 
+

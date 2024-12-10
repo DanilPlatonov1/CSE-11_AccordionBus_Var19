@@ -74,7 +74,7 @@
             groupBoxConfig.Dock = DockStyle.Left;
             groupBoxConfig.Location = new Point(0, 0);
             groupBoxConfig.Name = "groupBoxConfig";
-            groupBoxConfig.Size = new Size(549, 341);
+            groupBoxConfig.Size = new Size(167, 341);
             groupBoxConfig.TabIndex = 0;
             groupBoxConfig.TabStop = false;
             groupBoxConfig.Text = "Параметры";
@@ -89,7 +89,7 @@
             groupBoxColors.Controls.Add(panelBlue);
             groupBoxColors.Controls.Add(panelGreen);
             groupBoxColors.Controls.Add(panelRed);
-            groupBoxColors.Location = new Point(370, 12);
+            groupBoxColors.Location = new Point(12, 138);
             groupBoxColors.Name = "groupBoxColors";
             groupBoxColors.Size = new Size(140, 84);
             groupBoxColors.TabIndex = 1;
@@ -163,7 +163,7 @@
             // checkBoxGarmoshka
             // 
             checkBoxGarmoshka.AutoSize = true;
-            checkBoxGarmoshka.Location = new Point(12, 74);
+            checkBoxGarmoshka.Location = new Point(12, 84);
             checkBoxGarmoshka.Name = "checkBoxGarmoshka";
             checkBoxGarmoshka.Size = new Size(99, 19);
             checkBoxGarmoshka.TabIndex = 7;
@@ -173,7 +173,7 @@
             // checkBoxGlass
             // 
             checkBoxGlass.AutoSize = true;
-            checkBoxGlass.Location = new Point(12, 99);
+            checkBoxGlass.Location = new Point(13, 109);
             checkBoxGlass.Name = "checkBoxGlass";
             checkBoxGlass.Size = new Size(64, 19);
             checkBoxGlass.TabIndex = 6;
@@ -186,7 +186,7 @@
             numericUpDownSpeed.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             numericUpDownSpeed.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericUpDownSpeed.Name = "numericUpDownSpeed";
-            numericUpDownSpeed.Size = new Size(88, 23);
+            numericUpDownSpeed.Size = new Size(71, 23);
             numericUpDownSpeed.TabIndex = 5;
             numericUpDownSpeed.Value = new decimal(new int[] { 10, 0, 0, 0 });
             // 
@@ -196,7 +196,7 @@
             numericUpDownWeight.Maximum = new decimal(new int[] { 120, 0, 0, 0 });
             numericUpDownWeight.Minimum = new decimal(new int[] { 30, 0, 0, 0 });
             numericUpDownWeight.Name = "numericUpDownWeight";
-            numericUpDownWeight.Size = new Size(88, 23);
+            numericUpDownWeight.Size = new Size(71, 23);
             numericUpDownWeight.TabIndex = 4;
             numericUpDownWeight.Value = new decimal(new int[] { 30, 0, 0, 0 });
             // 
@@ -221,9 +221,9 @@
             // labelModifiedObject
             // 
             labelModifiedObject.BorderStyle = BorderStyle.FixedSingle;
-            labelModifiedObject.Location = new Point(442, 99);
+            labelModifiedObject.Location = new Point(13, 281);
             labelModifiedObject.Name = "labelModifiedObject";
-            labelModifiedObject.Size = new Size(100, 23);
+            labelModifiedObject.Size = new Size(140, 40);
             labelModifiedObject.TabIndex = 1;
             labelModifiedObject.Text = "Продвинутый";
             labelModifiedObject.TextAlign = ContentAlignment.MiddleCenter;
@@ -232,9 +232,9 @@
             // labelSimpleObject
             // 
             labelSimpleObject.BorderStyle = BorderStyle.FixedSingle;
-            labelSimpleObject.Location = new Point(336, 99);
+            labelSimpleObject.Location = new Point(13, 237);
             labelSimpleObject.Name = "labelSimpleObject";
-            labelSimpleObject.Size = new Size(100, 23);
+            labelSimpleObject.Size = new Size(140, 40);
             labelSimpleObject.TabIndex = 0;
             labelSimpleObject.Text = "Простой ";
             labelSimpleObject.TextAlign = ContentAlignment.MiddleCenter;
@@ -242,6 +242,7 @@
             // 
             // pictureBoxObject
             // 
+            pictureBoxObject.BorderStyle = BorderStyle.FixedSingle;
             pictureBoxObject.Location = new Point(7, 74);
             pictureBoxObject.Name = "pictureBoxObject";
             pictureBoxObject.Size = new Size(256, 156);
@@ -250,7 +251,7 @@
             // 
             // buttonAdd
             // 
-            buttonAdd.Location = new Point(554, 270);
+            buttonAdd.Location = new Point(7, 236);
             buttonAdd.Name = "buttonAdd";
             buttonAdd.Size = new Size(75, 23);
             buttonAdd.TabIndex = 9;
@@ -260,7 +261,7 @@
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(736, 270);
+            buttonCancel.Location = new Point(188, 236);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(75, 23);
             buttonCancel.TabIndex = 10;
@@ -270,12 +271,16 @@
             // panelObject
             // 
             panelObject.AllowDrop = true;
+            panelObject.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            panelObject.BorderStyle = BorderStyle.FixedSingle;
+            panelObject.Controls.Add(buttonCancel);
             panelObject.Controls.Add(labelAdditionalColor);
+            panelObject.Controls.Add(buttonAdd);
             panelObject.Controls.Add(labelBaseColor);
             panelObject.Controls.Add(pictureBoxObject);
-            panelObject.Location = new Point(548, 0);
+            panelObject.Location = new Point(172, 0);
             panelObject.Name = "panelObject";
-            panelObject.Size = new Size(275, 264);
+            panelObject.Size = new Size(275, 341);
             panelObject.TabIndex = 11;
             panelObject.DragDrop += PanelObject_DragDrop;
             panelObject.DragEnter += PanelObject_DragEnter;
@@ -284,7 +289,7 @@
             // 
             labelAdditionalColor.AllowDrop = true;
             labelAdditionalColor.BorderStyle = BorderStyle.FixedSingle;
-            labelAdditionalColor.Location = new Point(193, 34);
+            labelAdditionalColor.Location = new Point(193, 44);
             labelAdditionalColor.Name = "labelAdditionalColor";
             labelAdditionalColor.Size = new Size(70, 20);
             labelAdditionalColor.TabIndex = 9;
@@ -297,7 +302,7 @@
             // 
             labelBaseColor.AllowDrop = true;
             labelBaseColor.BorderStyle = BorderStyle.FixedSingle;
-            labelBaseColor.Location = new Point(7, 34);
+            labelBaseColor.Location = new Point(7, 44);
             labelBaseColor.Name = "labelBaseColor";
             labelBaseColor.Size = new Size(57, 20);
             labelBaseColor.TabIndex = 8;
@@ -310,10 +315,8 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(823, 341);
+            ClientSize = new Size(448, 341);
             Controls.Add(panelObject);
-            Controls.Add(buttonCancel);
-            Controls.Add(buttonAdd);
             Controls.Add(groupBoxConfig);
             Name = "FormBusConfig";
             Text = "Создание объекта";

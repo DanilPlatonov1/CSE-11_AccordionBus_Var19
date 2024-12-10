@@ -60,9 +60,9 @@
             groupBoxTools.Controls.Add(panelStorage);
             groupBoxTools.Controls.Add(comboBoxSelectorCompany);
             groupBoxTools.Dock = DockStyle.Right;
-            groupBoxTools.Location = new Point(1011, 0);
+            groupBoxTools.Location = new Point(813, 0);
             groupBoxTools.Name = "groupBoxTools";
-            groupBoxTools.Size = new Size(231, 599);
+            groupBoxTools.Size = new Size(231, 511);
             groupBoxTools.TabIndex = 0;
             groupBoxTools.TabStop = false;
             groupBoxTools.Text = "Инструменты";
@@ -76,7 +76,7 @@
             panelCompanyTools.Controls.Add(buttonGoToCheck);
             panelCompanyTools.Dock = DockStyle.Bottom;
             panelCompanyTools.Enabled = false;
-            panelCompanyTools.Location = new Point(3, 441);
+            panelCompanyTools.Location = new Point(3, 353);
             panelCompanyTools.Name = "panelCompanyTools";
             panelCompanyTools.Size = new Size(225, 155);
             panelCompanyTools.TabIndex = 10;
@@ -242,7 +242,7 @@
             pictureBox.Dock = DockStyle.Fill;
             pictureBox.Location = new Point(0, 0);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(1011, 599);
+            pictureBox.Size = new Size(813, 511);
             pictureBox.TabIndex = 3;
             pictureBox.TabStop = false;
             // 
@@ -250,7 +250,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1242, 599);
+            ClientSize = new Size(1044, 511);
             Controls.Add(pictureBox);
             Controls.Add(groupBoxTools);
             Name = "FormBusCollection";

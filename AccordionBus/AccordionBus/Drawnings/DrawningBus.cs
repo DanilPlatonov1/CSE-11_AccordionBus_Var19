@@ -71,7 +71,7 @@ public class DrawningBus
     /// <param name="speed">Скорость</param>
     /// <param name="weight">Вес</param>
     /// <param name="bodyColor">Основной цвет</param>
-    public DrawningBus(int speed, double weight, Color bodyColor):this()
+    public DrawningBus(int speed, double weight, Color bodyColor) : this()
     {
         EntityBus = new EntityBus(speed, weight, bodyColor);
     }
@@ -168,29 +168,46 @@ public class DrawningBus
     /// </summary>
     /// <param name="g"></param>
     public virtual void DrawTransport(Graphics g)
-    {
-        if (EntityBus == null || !_startPosX.HasValue || !_startPosY.HasValue)
-            return;
-        //кузов
-        Brush br = new SolidBrush(EntityBus.BodyColor);
-        g.FillRectangle(br, _startPosX.Value, _startPosY.Value, 90, 30);
-        g.DrawRectangle(new Pen(Color.Black), _startPosX.Value, _startPosY.Value, 90, 30);
-        //диски
-        Brush brWhite = new SolidBrush(Color.White);
-        g.FillEllipse(brWhite, _startPosX.Value, _startPosY.Value + 25, 20, 15);
-        g.FillEllipse(brWhite, _startPosX.Value + 70, _startPosY.Value + 25, 20, 15);
-        Brush brWheel = new SolidBrush(Color.Black);
-        g.FillEllipse(brWheel, _startPosX.Value, _startPosY.Value + 25, 20, 15);
-        g.FillEllipse(brWheel, _startPosX.Value + 70, _startPosY.Value + 25, 20, 15);
+{
+    if (EntityBus == null || !_startPosX.HasValue || !_startPosY.HasValue)
+        return;
 
-        Pen penWheel = new Pen(Color.Black);
-        g.DrawEllipse(penWheel, _startPosX.Value, _startPosY.Value + 25, 20, 15);
-        g.DrawEllipse(penWheel, _startPosX.Value + 70, _startPosY.Value + 25, 20, 15);
+    // Кузов
+    Brush bodyBrush = new SolidBrush(EntityBus.BodyColor);
+    g.FillRectangle(bodyBrush, _startPosX.Value, _startPosY.Value, 90, 30);
+    Pen bodyPen = new Pen(Color.Black, 2);
+    g.DrawRectangle(bodyPen, _startPosX.Value, _startPosY.Value, 90, 30);
 
+    // Полосы на кузове
+    Pen stripePen = new Pen(Color.DarkGray, 1);
+    g.DrawLine(stripePen, _startPosX.Value + 5, _startPosY.Value + 10, _startPosX.Value + 85, _startPosY.Value + 10);
+    g.DrawLine(stripePen, _startPosX.Value + 5, _startPosY.Value + 20, _startPosX.Value + 85, _startPosY.Value + 20);
 
-        //двери
-        Brush brDoor = new SolidBrush(Color.Black);
-        g.FillRectangle(brDoor, _startPosX.Value + 55, _startPosY.Value + 10, 5, 20);
-        g.FillRectangle(brDoor, _startPosX.Value + 25, _startPosY.Value + 10, 5, 20);
-    }
+    // Диски с декоративной обводкой
+    int diskDiameter = 20; // Диаметр круга
+    Brush diskBrush = new SolidBrush(Color.Gray);
+    g.FillEllipse(diskBrush, _startPosX.Value + 5, _startPosY.Value + 25, diskDiameter, diskDiameter);
+    g.FillEllipse(diskBrush, _startPosX.Value + 65, _startPosY.Value + 25, diskDiameter, diskDiameter);
+
+    Pen diskOutlinePen = new Pen(Color.Black, 1);
+    g.DrawEllipse(diskOutlinePen, _startPosX.Value + 5, _startPosY.Value + 25, diskDiameter, diskDiameter);
+    g.DrawEllipse(diskOutlinePen, _startPosX.Value + 65, _startPosY.Value + 25, diskDiameter, diskDiameter);
+
+    Brush tireBrush = new SolidBrush(Color.Black);
+    int tireDiameter = 16; // Диаметр круга
+    g.FillEllipse(tireBrush, _startPosX.Value + 7, _startPosY.Value + 27, tireDiameter, tireDiameter);
+    g.FillEllipse(tireBrush, _startPosX.Value + 67, _startPosY.Value + 27, tireDiameter, tireDiameter);
+
+    // Одна дверь по центру
+    LinearGradientBrush doorBrush = new LinearGradientBrush(
+        new Rectangle(_startPosX.Value + 40, _startPosY.Value + 10, 10, 20),
+        Color.Black,
+        Color.Gray,
+        LinearGradientMode.Vertical
+    );
+    g.FillRectangle(doorBrush, _startPosX.Value + 40, _startPosY.Value + 10, 10, 20);
+
+    // Обводка двери
+    g.DrawRectangle(new Pen(Color.Black, 1), _startPosX.Value + 40, _startPosY.Value + 10, 10, 20);
+}
 }

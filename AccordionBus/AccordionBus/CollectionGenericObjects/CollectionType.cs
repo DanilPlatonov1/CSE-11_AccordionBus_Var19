@@ -8,5 +8,9 @@ namespace AccordionBus.CollectionGenericObjects;
 
 public enum CollectionType
 {
-    None=0, Massive=1, List=2
+    None=0,
+
+    Massive=1,
+
+    List=2
 }
