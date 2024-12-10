@@ -17,19 +17,23 @@ public class EntityBus
     /// Скорость
     /// </summary>
     public int Speed { get; private set; }
+
     /// <summary>
     /// Вес
     /// </summary>
     public double Weight { get; private set; }
+
     /// <summary>
     /// Основной цвет
     /// </summary>
     public Color BodyColor { get; private set; }
 
+
     /// <summary>
     /// Шаг перемещения автомобиля
     /// </summary>
     public double Step => Speed * 100 / Weight;
+
     /// <summary>
     /// Конструктор сущности
     /// </summary>
@@ -42,8 +46,24 @@ public class EntityBus
         Weight = weight;
         BodyColor = bodyColor;
     }
+
     public void SetBody(Color color)
     {
         BodyColor = color;
+    }
+
+    public virtual string[] GetStringRepresentation()
+    {
+        return new[] { nameof(EntityBus), Speed.ToString(), Weight.ToString(), BodyColor.Name };
+    }
+
+    public static EntityBus? CreateEntityBus(string[] strs)
+    {
+        if (strs.Length != 4 || strs[0] != nameof(EntityBus))
+        {
+            return null;
+        }
+        return new EntityBus(Convert.ToInt32(strs[1]),
+        Convert.ToDouble(strs[2]), Color.FromName(strs[3]));
     }
 }

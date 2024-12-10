@@ -19,13 +19,18 @@ public class DrawningAccordionBus:DrawningBus
     /// <param name="additionalColor">Дополнительный цвет</param>
     /// <param name="bodyGlass">Признак наличия стёкол</param>
     /// /// <param name="garmoshka">Признак наличия гармошки</param>
-   
     public DrawningAccordionBus(int speed, double weight, Color bodyColor, Color
     additionalColor, bool bodyGlass,bool garmoshka): base(200, 40)
     {
         EntityBus = new EntityAccordionBus(speed, weight, bodyColor, additionalColor,
         bodyGlass, garmoshka);
     }
+
+    public DrawningAccordionBus(EntityAccordionBus bus) : base(200, 40)
+    {
+        EntityBus = bus;
+    }
+
     /// <summary>
     /// перегрузка для создания автобуса в коллекцию базового типа
     /// </summary>

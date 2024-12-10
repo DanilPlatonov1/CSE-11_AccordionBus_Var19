@@ -65,6 +65,12 @@ public class DrawningBus
         _startPosX = null;
         _startPosY = null;
     }
+
+    public DrawningBus(EntityBus bus)
+    {
+        EntityBus = bus;
+    }
+
     /// <summary>
     /// Конструктор
     /// </summary>

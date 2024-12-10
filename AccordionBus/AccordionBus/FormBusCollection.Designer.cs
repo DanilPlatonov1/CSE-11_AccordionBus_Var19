@@ -46,11 +46,18 @@
             labelCollectionName = new Label();
             comboBoxSelectorCompany = new ComboBox();
             pictureBox = new PictureBox();
-            colorDialog1 = new ColorDialog();
+            colorDialog = new ColorDialog();
+            menuStrip = new MenuStrip();
+            файлToolStripMenuItem = new ToolStripMenuItem();
+            saveToolStripMenuItem = new ToolStripMenuItem();
+            loadToolStripMenuItem = new ToolStripMenuItem();
+            saveFileDialog = new SaveFileDialog();
+            openFileDialog = new OpenFileDialog();
             groupBoxTools.SuspendLayout();
             panelCompanyTools.SuspendLayout();
             panelStorage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).BeginInit();
+            menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // groupBoxTools
@@ -60,9 +67,9 @@
             groupBoxTools.Controls.Add(panelStorage);
             groupBoxTools.Controls.Add(comboBoxSelectorCompany);
             groupBoxTools.Dock = DockStyle.Right;
-            groupBoxTools.Location = new Point(813, 0);
+            groupBoxTools.Location = new Point(813, 24);
             groupBoxTools.Name = "groupBoxTools";
-            groupBoxTools.Size = new Size(231, 511);
+            groupBoxTools.Size = new Size(231, 487);
             groupBoxTools.TabIndex = 0;
             groupBoxTools.TabStop = false;
             groupBoxTools.Text = "Инструменты";
@@ -76,7 +83,7 @@
             panelCompanyTools.Controls.Add(buttonGoToCheck);
             panelCompanyTools.Dock = DockStyle.Bottom;
             panelCompanyTools.Enabled = false;
-            panelCompanyTools.Location = new Point(3, 353);
+            panelCompanyTools.Location = new Point(3, 329);
             panelCompanyTools.Name = "panelCompanyTools";
             panelCompanyTools.Size = new Size(225, 155);
             panelCompanyTools.TabIndex = 10;
@@ -240,11 +247,52 @@
             // pictureBox
             // 
             pictureBox.Dock = DockStyle.Fill;
-            pictureBox.Location = new Point(0, 0);
+            pictureBox.Location = new Point(0, 24);
             pictureBox.Name = "pictureBox";
-            pictureBox.Size = new Size(813, 511);
+            pictureBox.Size = new Size(813, 487);
             pictureBox.TabIndex = 3;
             pictureBox.TabStop = false;
+            // 
+            // menuStrip
+            // 
+            menuStrip.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem });
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(1044, 24);
+            menuStrip.TabIndex = 4;
+            menuStrip.Text = "menuStrip1";
+            // 
+            // файлToolStripMenuItem
+            // 
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { saveToolStripMenuItem, loadToolStripMenuItem });
+            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            файлToolStripMenuItem.Size = new Size(48, 20);
+            файлToolStripMenuItem.Text = "Файл";
+            // 
+            // saveToolStripMenuItem
+            // 
+            saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
+            saveToolStripMenuItem.Size = new Size(181, 22);
+            saveToolStripMenuItem.Text = "Сохранение";
+            saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
+            // 
+            // loadToolStripMenuItem
+            // 
+            loadToolStripMenuItem.Name = "loadToolStripMenuItem";
+            loadToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.L;
+            loadToolStripMenuItem.Size = new Size(181, 22);
+            loadToolStripMenuItem.Text = "Загрузка";
+            loadToolStripMenuItem.Click += loadToolStripMenuItem_Click;
+            // 
+            // saveFileDialog
+            // 
+            saveFileDialog.Filter = "txt file | *.txt";
+            // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog1";
+            openFileDialog.Filter = "txt file | *.txt";
             // 
             // FormBusCollection
             // 
@@ -253,6 +301,8 @@
             ClientSize = new Size(1044, 511);
             Controls.Add(pictureBox);
             Controls.Add(groupBoxTools);
+            Controls.Add(menuStrip);
+            MainMenuStrip = menuStrip;
             Name = "FormBusCollection";
             Text = "Коллекция автобусов";
             groupBoxTools.ResumeLayout(false);
@@ -261,7 +311,10 @@
             panelStorage.ResumeLayout(false);
             panelStorage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox).EndInit();
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -274,7 +327,7 @@
         private PictureBox pictureBox;
         private Button buttonRefresh;
         private Button buttonGoToCheck;
-        private ColorDialog colorDialog1;
+        private ColorDialog colorDialog;
         private Panel panelStorage;
         private TextBox textBoxCollectionName;
         private Label labelCollectionName;
@@ -285,5 +338,11 @@
         private Button buttonCollectionAdd;
         private Button buttonCreateCompany;
         private Panel panelCompanyTools;
+        private MenuStrip menuStrip;
+        private ToolStripMenuItem файлToolStripMenuItem;
+        private ToolStripMenuItem saveToolStripMenuItem;
+        private ToolStripMenuItem loadToolStripMenuItem;
+        private SaveFileDialog saveFileDialog;
+        private OpenFileDialog openFileDialog;
     }
 }

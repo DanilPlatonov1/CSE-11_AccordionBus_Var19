@@ -45,4 +45,17 @@ public class EntityAccordionBus: EntityBus
     {
         AdditionalColor = color;
     }
+
+    public override string[] GetStringRepresentation()
+    {
+        return new[] { nameof(EntityAccordionBus), Speed.ToString(), Weight.ToString(), BodyColor.Name,
+                AdditionalColor.Name, BodyGlass.ToString(), BodyGarmoshka.ToString() };
+    }
+    public static EntityAccordionBus? CreateEntityAccordionBus(string[] strs)
+    {
+        if (strs.Length != 7 || strs[0] != nameof(EntityAccordionBus)) { return null; }
+
+        return new EntityAccordionBus(Convert.ToInt32(strs[1]), Convert.ToDouble(strs[2]),
+            Color.FromName(strs[3]), Color.FromName(strs[4]), Convert.ToBoolean(strs[5]), Convert.ToBoolean(strs[6]));
+    }
 }

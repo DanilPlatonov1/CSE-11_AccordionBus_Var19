@@ -57,7 +57,8 @@ public partial class FormBusCollection : Form
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ButtonAddBus_Click(object sender, EventArgs e) {
+    private void ButtonAddBus_Click(object sender, EventArgs e)
+    {
         FormBusConfig form = new();
         form.Show();
         form.AddEvent(SetBus);
@@ -78,7 +79,7 @@ public partial class FormBusCollection : Form
             return;
         }
         int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-        if (_company - pos!=null)
+        if (_company - pos != null)
         {
             MessageBox.Show("Объект удален");
             pictureBox.Image = _company.Show();
@@ -206,4 +207,34 @@ public partial class FormBusCollection : Form
         RefreshListBoxItems();
     }
 
+    private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (openFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            if (_storageCollection.LoadData(openFileDialog.FileName))
+            {
+                MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshListBoxItems();
+            }
+            else
+            {
+                MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+
+    private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (saveFileDialog.ShowDialog() == DialogResult.OK)
+        {
+            if (_storageCollection.SaveData(saveFileDialog.FileName))
+            {
+                MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
 }

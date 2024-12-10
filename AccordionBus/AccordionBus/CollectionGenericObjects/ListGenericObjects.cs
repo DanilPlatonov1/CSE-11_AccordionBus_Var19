@@ -7,13 +7,24 @@ using System.Threading.Tasks;
 
 namespace AccordionBus.CollectionGenericObjects;
 
-public class ListGenericObjects<T>:ICollectionGenericObjects<T> where T : class
+public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : class
 {
     private readonly List<T?> _collection;
     private int _maxCount;
     public int Count => _collection.Count;
+    public CollectionType GetCollectionType => CollectionType.List;
 
-    public int SetMaxCount { set { if (value > 0) { _maxCount = value; } } }
+    public int MaxCount
+    {
+        get
+        {
+            return _maxCount;
+        }
+        set
+        {
+            if (value > 0) _maxCount = value;
+        }
+    }
 
     /// <summary>
     /// Конструктор
@@ -60,5 +71,13 @@ public class ListGenericObjects<T>:ICollectionGenericObjects<T> where T : class
         T? obj = _collection[position];
         _collection?.RemoveAt(position);
         return obj;
+    }
+
+    public IEnumerable<T?> GetItems()
+    {
+        for (int i = 0; i < _collection.Count; i++)
+        {
+            yield return _collection[i];
+        }
     }
 }
