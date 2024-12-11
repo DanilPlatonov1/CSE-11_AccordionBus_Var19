@@ -1,4 +1,5 @@
-﻿using ProjectAccordionBus.CollectionGenericObjects;
+﻿using AccordionBus.Exeptions;
+using ProjectAccordionBus.CollectionGenericObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ where T : class
         {
             if (value > 0)
             {
-                // Создаем новый массив с заданной длиной и копируем существующие элементы
                 T?[] newCollection = new T?[value];
                 for (int i = 0; i < Math.Min(_collection.Length, value); i++)
                 {
@@ -41,17 +41,18 @@ where T : class
     /// </summary>
     public MassiveGenericObjects()
     {
-        _collection = new T?[0]; // Начальная длина 0
+        _collection = new T?[24];
     }
 
-    public T? Get(int position) // получение с позиции
+    public T? Get(int position)
     {
-        if (position < 0 || position >= _collection.Length) // если позиция передана неправильно
-            return null;
+        if (position < 0 || position >= _collection.Length)
+            throw new PositionOutOfCollectionException();
+
         return _collection[position];
     }
 
-    public int Insert(T obj) // вставка объекта на свободное место
+    public int Insert(T obj)
     {
         for (int i = 0; i < _collection.Length; ++i)
         {
@@ -61,22 +62,21 @@ where T : class
                 return i;
             }
         }
-        return -1; // Нет свободного места
+        throw new CollectionOverflowException(Count);
     }
 
-    public int Insert(T obj, int position) // вставка объекта на место
+    public int Insert(T obj, int position)
     {
-        if (position < 0 || position >= _collection.Length) // если позиция передана неправильно
-            return -1;
+        if (position < 0 || position >= _collection.Length)
+            throw new PositionOutOfCollectionException(position);
 
-        if (_collection[position] == null) // если позиция пуста
+        if (_collection[position] == null)
         {
             _collection[position] = obj;
             return position;
         }
         else
         {
-            // Ищем свободное место справа
             for (int i = position; i < _collection.Length; ++i)
             {
                 if (_collection[i] == null)
@@ -85,7 +85,6 @@ where T : class
                     return i;
                 }
             }
-            // Ищем свободное место слева
             for (int i = 0; i < position; ++i)
             {
                 if (_collection[i] == null)
@@ -95,16 +94,22 @@ where T : class
                 }
             }
         }
-        return -1; // Нет свободного места
+        throw new CollectionOverflowException(Count);
     }
 
-    public T? Remove(int position) // удаление объекта, зануляя его
+    public T? Remove(int position)
     {
+        if (_collection[position] == null)
+        {
+            throw new ObjectNotFoundException(position);
+        }
+
         if (position < 0 || position >= _collection.Length || _collection[position] == null)
-            return null;
+            throw new PositionOutOfCollectionException(position);
 
         T? temp = _collection[position];
         _collection[position] = null;
+
         return temp;
     }
 

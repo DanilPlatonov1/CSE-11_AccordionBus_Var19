@@ -1,46 +1,58 @@
 ﻿using AccordionBus.CollectionGenericObjects;
 using AccordionBus.Drawnings;
-using AccordionBus.MovementStrategy;
+using AccordionBus.Exeptions;
+using Microsoft.Extensions.Logging;
 using ProjectAccordionBus.CollectionGenericObjects;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AccordionBus;
 
 public partial class FormBusCollection : Form
 {
     private readonly StorageCollection<DrawningBus> _storageCollection;
+
     /// <summary>
     /// Компания
     /// </summary>
     private AbstractCompany? _company = null;
+
+    /// <summary>
+    /// Логер
+    /// </summary>
+    private readonly ILogger _logger;
+
     /// <summary>
     /// Конструктор
     /// </summary>
-    public FormBusCollection()
+    public FormBusCollection(ILogger<FormBusCollection> logger)
     {
         InitializeComponent();
         _storageCollection = new();
+        _logger = logger;
     }
 
     private void SetBus(DrawningBus bus)
     {
-        if (_company == null || bus == null) return;
-        if (_company + bus)
+        try
         {
-            MessageBox.Show("Объект добавлен");
-            pictureBox.Image = _company.Show();
+            if (_company == null || bus == null) return;
+            if (_company + bus)
+            {
+                MessageBox.Show("Объект добавлен");
+                pictureBox.Image = _company.Show();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            MessageBox.Show("Не удалось добавить объект");
+            if (ex is CollectionOverflowException)
+            {
+                MessageBox.Show("Не удалось добавить объект");
+                _logger.LogError("Ошибка: {Message}", ex.Message);
+            }
+            else if (ex is PositionOutOfCollectionException)
+            {
+                MessageBox.Show("Выход за пределы коллекции");
+                _logger.LogError("Ошибка: {Message}", ex.Message);
+            }
         }
     }
     /// <summary>
@@ -79,14 +91,19 @@ public partial class FormBusCollection : Form
             return;
         }
         int pos = Convert.ToInt32(maskedTextBoxPosition.Text);
-        if (_company - pos != null)
+        try
         {
-            MessageBox.Show("Объект удален");
-            pictureBox.Image = _company.Show();
+            if (_company - pos != null)
+            {
+                MessageBox.Show("Объект удален");
+                _logger.LogInformation("Удален объект - " + pos);
+                pictureBox.Image = _company.Show();
+            }
         }
-        else
+        catch (Exception ex)
         {
             MessageBox.Show("Не удалось удалить объект");
+            _logger.LogError("Ошибка: {Message}", ex.Message);
         }
     }
     /// <summary>
@@ -154,18 +171,26 @@ public partial class FormBusCollection : Form
             MessageBox.Show("Не все данные заполнены", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        CollectionType collectionType = CollectionType.None;
-        if (radioButtonMassive.Checked)
+        try
         {
-            collectionType = CollectionType.Massive;
-        }
-        else if (radioButtonList.Checked)
-        {
-            collectionType = CollectionType.List;
-        }
+            CollectionType collectionType = CollectionType.None;
+            if (radioButtonMassive.Checked)
+            {
+                collectionType = CollectionType.Massive;
+            }
+            else if (radioButtonList.Checked)
+            {
+                collectionType = CollectionType.List;
+            }
 
-        _storageCollection.AddCollection(textBoxCollectionName.Text, collectionType);
-        RefreshListBoxItems();
+            _storageCollection.AddCollection(textBoxCollectionName.Text, collectionType);
+            RefreshListBoxItems();
+            _logger.LogInformation("Коллекция добавлена " + textBoxCollectionName.Text);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Ошибка: {Message}", ex.Message);
+        }
     }
     private void buttonCollectionDel_Click(object sender, EventArgs e)
     {
@@ -174,12 +199,20 @@ public partial class FormBusCollection : Form
             MessageBox.Show("Коллекция не выбрана");
             return;
         }
-        if (MessageBox.Show("Удалить коллекцию?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        try
         {
-            return;
+            if (MessageBox.Show("Удалить коллекцию?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                return;
+            }
+            _storageCollection.DelCollection(listBoxCollection.SelectedItem.ToString());
+            RefreshListBoxItems();
+            _logger.LogInformation("Коллекция " + listBoxCollection.SelectedItem.ToString() + " удалена");
         }
-        _storageCollection.DelCollection(listBoxCollection.SelectedItem.ToString());
-        RefreshListBoxItems();
+        catch (Exception ex)
+        {
+            _logger.LogError("Ошибка: {Message}", ex.Message);
+        }
     }
     private void buttonCreateCompany_Click(object sender, EventArgs e)
     {
@@ -211,14 +244,19 @@ public partial class FormBusCollection : Form
     {
         if (openFileDialog.ShowDialog() == DialogResult.OK)
         {
-            if (_storageCollection.LoadData(openFileDialog.FileName))
+            try
             {
-                MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _storageCollection.LoadData(openFileDialog.FileName);
                 RefreshListBoxItems();
+                MessageBox.Show("Загрузка прошла успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _logger.LogInformation("Загрузка из файла: {filename}",
+                openFileDialog.FileName);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Не загрузилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Результат",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError("Ошибка: {Message}", ex.Message);
             }
         }
     }
@@ -227,13 +265,16 @@ public partial class FormBusCollection : Form
     {
         if (saveFileDialog.ShowDialog() == DialogResult.OK)
         {
-            if (_storageCollection.SaveData(saveFileDialog.FileName))
+            try
             {
+                _storageCollection.SaveData(saveFileDialog.FileName);
                 MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _logger.LogInformation("Сохранение в файл: {filename}", saveFileDialog.FileName);
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _logger.LogError("Ошибка: {Message}", ex.Message);
             }
         }
     }

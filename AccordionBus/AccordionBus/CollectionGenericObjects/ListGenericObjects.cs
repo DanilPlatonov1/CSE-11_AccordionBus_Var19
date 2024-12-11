@@ -1,4 +1,5 @@
-﻿using ProjectAccordionBus.CollectionGenericObjects;
+﻿using AccordionBus.Exeptions;
+using ProjectAccordionBus.CollectionGenericObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,14 +43,15 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
         }
         else
         {
-            return null;
+            throw new PositionOutOfCollectionException(position);
         }
 
     }
 
     public int Insert(T obj)
     {
-        if (Count == _maxCount) { return -1; }
+        if (Count == _maxCount)
+            throw new CollectionOverflowException(Count);
         _collection.Add(obj);
         return Count;
     }
@@ -57,9 +59,11 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
     public int Insert(T obj, int position)
     {
         if (position < 0 || position >= Count || Count == _maxCount)
-        {
-            return -1;
-        }
+            throw new PositionOutOfCollectionException(position);
+
+        if (Count == _maxCount)
+            throw new CollectionOverflowException(Count);
+
         _collection.Insert(position, obj);
         return position;
 
@@ -67,7 +71,9 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
 
     public T? Remove(int position)
     {
-        if (position >= Count || position < 0) return null;
+        if (position >= Count || position < 0)
+            throw new PositionOutOfCollectionException(position);
+
         T? obj = _collection[position];
         _collection?.RemoveAt(position);
         return obj;

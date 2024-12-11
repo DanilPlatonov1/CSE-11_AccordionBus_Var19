@@ -1,4 +1,5 @@
 ﻿using AccordionBus.Drawnings;
+using AccordionBus.Exeptions;
 using ProjectAccordionBus.CollectionGenericObjects;
 using System.Text;
 
@@ -80,27 +81,31 @@ public class StorageCollection<T> where T : DrawningBus
             return null;
         }
     }
+
     /// <summary>
     /// Ключевое слово, с которого должен начинаться файл
     /// </summary>
     private readonly string _collectionKey = "CollectionsStorage";
+
     /// <summary>
     /// Разделитель для записи ключа и значения элемента словаря
     /// </summary>
     private readonly string _separatorForKeyValue = "|";
+
     /// <summary>
     /// Разделитель для записей коллекции данных в файл
     /// </summary>
     private readonly string _separatorItems = ";";
+
     /// <summary>
-    /// Сохранение информации по самолетам в хранилище в файл
+    /// Сохранение информации в файл
     /// </summary>
     /// <param name="filename">Путь и имя файла</param>
     /// <returns>true - сохранение прошло успешно, false - ошибка при сохранении данных</returns>
-    public bool SaveData(string filename)
+    public void SaveData(string filename)
     {
         if (_storages.Count == 0)
-            return false;
+            throw new Exception("В хранилище отсутствуют коллекции для сохранения");
 
         if (File.Exists(filename))
             File.Delete(filename);
@@ -135,63 +140,61 @@ public class StorageCollection<T> where T : DrawningBus
                 sw.Write(_separatorItems);
             }
         }
-        return true;
     }
 
     /// <summary>
-    /// Загрузка информации по самолетам в хранилище из файла
+    /// Загрузка информации из файла
     /// </summary>
     /// <param name="filename">Путь и имя файла</param>
     /// <returns>true - загрузка прошла успешно, false - ошибка при загрузке данных</returns>
-    public bool LoadData(string filename)
+    public void LoadData(string filename)
     {
         if (!File.Exists(filename))
-        {
-            return false;
-        }
+            throw new Exception("Файл не существует");
 
         using FileStream fs = new(filename, FileMode.Open);
         using StreamReader sr = new(fs);
 
         string str = sr.ReadLine();
         if (str == null || str.Length == 0)
-        {
-            return false;
-        }
+            throw new Exception("В файле нет данных");
 
         if (!str.Equals(_collectionKey))
-        {
-            return false;
-        }
+            throw new Exception("В файле неверные данные");
+
         _storages.Clear();
 
         while (!sr.EndOfStream)
         {
             string[] record = sr.ReadLine().Split(_separatorForKeyValue, StringSplitOptions.RemoveEmptyEntries);
             if (record.Length != 4)
-            {
                 continue;
-            }
+
             CollectionType collectionType = (CollectionType)Enum.Parse(typeof(CollectionType), record[1]);
             ICollectionGenericObjects<T>? collection = StorageCollection<T>.CreateCollection(collectionType);
+
             if (collection == null)
-            {
-                return false;
-            }
+                throw new Exception("Не удалось создать коллекцию");
             collection.MaxCount = Convert.ToInt32(record[2]);
 
             string[] set = record[3].Split(_separatorItems, StringSplitOptions.RemoveEmptyEntries);
             foreach (string elem in set)
             {
-                if (elem?.CreateDrawningBus() is T drawningBus)
+                if (elem?.CreateDrawningBus() is T bus)
                 {
-                    if (collection.Insert(drawningBus) == -1)
-                        return false;
+                    try
+                    {
+                        if (collection.Insert(bus) == -1)
+                            throw new Exception("Объект не удалось добавить в коллекцию: " + record[3]);
+                    }
+                    catch (CollectionOverflowException ex)
+                    {
+                        throw new Exception("Коллекция переполнена", ex);
+                    }
                 }
             }
             _storages.Add(record[0], collection);
         }
-        return true;
     }
 
     /// <summary>
