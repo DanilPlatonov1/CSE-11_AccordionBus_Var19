@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AccordionBus.Drawnings;
+﻿using AccordionBus.Drawnings;
 namespace AccordionBus.CollectionGenericObjects;
 
 using ProjectAccordionBus.CollectionGenericObjects;
@@ -17,26 +12,32 @@ public abstract class AbstractCompany
     /// Размер места (ширина)
     /// </summary>
     protected readonly int _placeSizeWidth = 240;
+
     /// <summary>
     /// Размер места (высота)
     /// </summary>
     protected readonly int _placeSizeHeight = 50;
+
     /// <summary>
     /// Ширина окна
     /// </summary>
     protected readonly int _pictureWidth;
+
     /// <summary>
     /// Высота окна
     /// </summary>
     protected readonly int _pictureHeight;
+
     /// <summary>
     /// Коллекция автомобилей
     /// </summary>
     protected ICollectionGenericObjects<DrawningBus>? _collection = null;
+
     /// <summary>
     /// Вычисление максимального количества элементов, который можно разместить в окне
     /// </summary>
-private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _placeSizeHeight);
+    private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _placeSizeHeight);
+
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -50,6 +51,7 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
         _collection = collection;
         _collection.MaxCount = GetMaxCount;
     }
+
     /// <summary>
     /// Перегрузка оператора сложения для класса
     /// </summary>
@@ -58,8 +60,9 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
     /// <returns></returns>
     public static bool operator +(AbstractCompany company, DrawningBus bus)
     {
-        return company._collection?.Insert(bus)!=-1? true : false;
+        return company._collection?.Insert(bus, new DrawiningBusEqutables()) != -1 ? true : false;
     }
+
     /// <summary>
     /// Перегрузка оператора удаления для класса
     /// </summary>
@@ -70,6 +73,7 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
     {
         return company._collection.Remove(position);
     }
+
     /// <summary>
     /// Получение случайного объекта из коллекции
     /// </summary>
@@ -79,6 +83,7 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
         Random rnd = new();
         return _collection?.Get(rnd.Next(GetMaxCount));
     }
+
     /// <summary>
     /// Вывод всей коллекции
     /// </summary>
@@ -89,18 +94,28 @@ private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _
         Graphics graphics = Graphics.FromImage(bitmap);
         DrawBackgound(graphics);
         SetObjectsPosition();
+
         for (int i = 0; i < (_collection?.Count ?? 0); ++i)
         {
             DrawningBus? obj = _collection?.Get(i);
             obj?.DrawTransport(graphics);
         }
+
         return bitmap;
     }
+
+    /// <summary>
+    /// Сортировка
+    /// </summary>
+    /// <param name="comparer">Сравнитель объектов</param>
+    public void Sort(IComparer<DrawningBus?> comparer) => _collection?.CollectionSort(comparer);
+
     /// <summary>
     /// Вывод заднего фона
     /// </summary>
     /// <param name="g"></param>
     protected abstract void DrawBackgound(Graphics g);
+
     /// <summary>
     /// Расстановка объектов
     /// </summary>

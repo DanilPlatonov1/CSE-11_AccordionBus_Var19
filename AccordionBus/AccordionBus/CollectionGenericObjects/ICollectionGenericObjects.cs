@@ -1,4 +1,5 @@
 ﻿using AccordionBus.CollectionGenericObjects;
+using AccordionBus.Drawnings;
 
 namespace ProjectAccordionBus.CollectionGenericObjects;
 /// <summary>
@@ -22,16 +23,18 @@ where T : class
     /// Добавление объекта в коллекцию
     /// </summary>
     /// <param name="obj">Добавляемый объект</param>
+    /// <param name="comparer">Сравнение двух объектов</param>
     /// <returns>true - вставка прошла удачно, false - вставка не удалась</returns>
-    int Insert(T obj);
+    int Insert(T obj, IEqualityComparer<DrawningBus?>? comparer = null);
 
     /// <summary>
     /// Добавление объекта в коллекцию на конкретную позицию
     /// </summary>
     /// <param name="obj">Добавляемый объект</param>
     /// <param name="position">Позиция</param>
+    /// <param name="comparer">Сравнение двух объектов</param>
     /// <returns>true - вставка прошла удачно, false - вставка не удалась</returns>
-    int Insert(T obj, int position);
+    int Insert(T obj, int position, IEqualityComparer<DrawningBus?>? comparer = null);
 
     /// <summary>
     /// Удаление объекта из коллекции с конкретной позиции
@@ -57,4 +60,10 @@ where T : class
     /// </summary>
     /// <returns>Поэлементый вывод элементов коллекции</returns>
     IEnumerable<T?> GetItems();
+
+    /// <summary>
+    /// Сортировка коллекции
+    /// </summary>
+    /// <param name="comparer">Сравнитель объектов</param>
+    void CollectionSort(IComparer<T?> comparer);
 }

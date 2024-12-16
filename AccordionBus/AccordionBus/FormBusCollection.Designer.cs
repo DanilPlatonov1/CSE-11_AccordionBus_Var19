@@ -53,6 +53,8 @@
             loadToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog = new SaveFileDialog();
             openFileDialog = new OpenFileDialog();
+            buttonSortByColor = new Button();
+            buttonSortByType = new Button();
             groupBoxTools.SuspendLayout();
             panelCompanyTools.SuspendLayout();
             panelStorage.SuspendLayout();
@@ -76,6 +78,8 @@
             // 
             // panelCompanyTools
             // 
+            panelCompanyTools.Controls.Add(buttonSortByColor);
+            panelCompanyTools.Controls.Add(buttonSortByType);
             panelCompanyTools.Controls.Add(buttonAddBus);
             panelCompanyTools.Controls.Add(maskedTextBoxPosition);
             panelCompanyTools.Controls.Add(buttonRefresh);
@@ -83,9 +87,9 @@
             panelCompanyTools.Controls.Add(buttonGoToCheck);
             panelCompanyTools.Dock = DockStyle.Bottom;
             panelCompanyTools.Enabled = false;
-            panelCompanyTools.Location = new Point(3, 329);
+            panelCompanyTools.Location = new Point(3, 276);
             panelCompanyTools.Name = "panelCompanyTools";
-            panelCompanyTools.Size = new Size(225, 155);
+            panelCompanyTools.Size = new Size(225, 208);
             panelCompanyTools.TabIndex = 10;
             // 
             // buttonAddBus
@@ -93,7 +97,7 @@
             buttonAddBus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonAddBus.Location = new Point(4, 3);
             buttonAddBus.Name = "buttonAddBus";
-            buttonAddBus.Size = new Size(209, 29);
+            buttonAddBus.Size = new Size(212, 29);
             buttonAddBus.TabIndex = 1;
             buttonAddBus.Text = "Добавление автобуса";
             buttonAddBus.UseVisualStyleBackColor = true;
@@ -113,7 +117,7 @@
             buttonRefresh.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonRefresh.Location = new Point(4, 125);
             buttonRefresh.Name = "buttonRefresh";
-            buttonRefresh.Size = new Size(209, 22);
+            buttonRefresh.Size = new Size(212, 22);
             buttonRefresh.TabIndex = 7;
             buttonRefresh.Text = "Обновить";
             buttonRefresh.UseVisualStyleBackColor = true;
@@ -124,7 +128,7 @@
             buttonDelBus.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonDelBus.Location = new Point(4, 67);
             buttonDelBus.Name = "buttonDelBus";
-            buttonDelBus.Size = new Size(209, 23);
+            buttonDelBus.Size = new Size(212, 23);
             buttonDelBus.TabIndex = 5;
             buttonDelBus.Text = "Удалить автомобиль";
             buttonDelBus.UseVisualStyleBackColor = true;
@@ -135,7 +139,7 @@
             buttonGoToCheck.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             buttonGoToCheck.Location = new Point(4, 96);
             buttonGoToCheck.Name = "buttonGoToCheck";
-            buttonGoToCheck.Size = new Size(209, 23);
+            buttonGoToCheck.Size = new Size(212, 23);
             buttonGoToCheck.TabIndex = 6;
             buttonGoToCheck.Text = "Передать на тесты";
             buttonGoToCheck.UseVisualStyleBackColor = true;
@@ -143,7 +147,7 @@
             // 
             // buttonCreateCompany
             // 
-            buttonCreateCompany.Location = new Point(6, 264);
+            buttonCreateCompany.Location = new Point(7, 243);
             buttonCreateCompany.Name = "buttonCreateCompany";
             buttonCreateCompany.Size = new Size(213, 23);
             buttonCreateCompany.TabIndex = 9;
@@ -163,14 +167,14 @@
             panelStorage.Dock = DockStyle.Top;
             panelStorage.Location = new Point(3, 19);
             panelStorage.Name = "panelStorage";
-            panelStorage.Size = new Size(225, 210);
+            panelStorage.Size = new Size(225, 184);
             panelStorage.TabIndex = 8;
             // 
             // buttonCollectionDel
             // 
-            buttonCollectionDel.Location = new Point(3, 184);
+            buttonCollectionDel.Location = new Point(4, 156);
             buttonCollectionDel.Name = "buttonCollectionDel";
-            buttonCollectionDel.Size = new Size(210, 23);
+            buttonCollectionDel.Size = new Size(212, 23);
             buttonCollectionDel.TabIndex = 6;
             buttonCollectionDel.Text = "Удалить коллекцию";
             buttonCollectionDel.UseVisualStyleBackColor = true;
@@ -180,9 +184,9 @@
             // 
             listBoxCollection.FormattingEnabled = true;
             listBoxCollection.ItemHeight = 15;
-            listBoxCollection.Location = new Point(3, 101);
+            listBoxCollection.Location = new Point(4, 101);
             listBoxCollection.Name = "listBoxCollection";
-            listBoxCollection.Size = new Size(213, 79);
+            listBoxCollection.Size = new Size(212, 49);
             listBoxCollection.TabIndex = 5;
             // 
             // buttonCollectionAdd
@@ -239,7 +243,7 @@
             comboBoxSelectorCompany.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxSelectorCompany.FormattingEnabled = true;
             comboBoxSelectorCompany.Items.AddRange(new object[] { "Автовокзал" });
-            comboBoxSelectorCompany.Location = new Point(6, 235);
+            comboBoxSelectorCompany.Location = new Point(7, 214);
             comboBoxSelectorCompany.Name = "comboBoxSelectorCompany";
             comboBoxSelectorCompany.Size = new Size(213, 23);
             comboBoxSelectorCompany.TabIndex = 0;
@@ -294,6 +298,28 @@
             openFileDialog.FileName = "openFileDialog1";
             openFileDialog.Filter = "txt file | *.txt";
             // 
+            // buttonSortByColor
+            // 
+            buttonSortByColor.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            buttonSortByColor.Location = new Point(4, 182);
+            buttonSortByColor.Name = "buttonSortByColor";
+            buttonSortByColor.Size = new Size(212, 22);
+            buttonSortByColor.TabIndex = 9;
+            buttonSortByColor.Text = "Сортировать по цвету";
+            buttonSortByColor.UseVisualStyleBackColor = true;
+            buttonSortByColor.Click += ButtonSortByColor_Click;
+            // 
+            // buttonSortByType
+            // 
+            buttonSortByType.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            buttonSortByType.Location = new Point(4, 153);
+            buttonSortByType.Name = "buttonSortByType";
+            buttonSortByType.Size = new Size(212, 23);
+            buttonSortByType.TabIndex = 8;
+            buttonSortByType.Text = "Сортировать по типу";
+            buttonSortByType.UseVisualStyleBackColor = true;
+            buttonSortByType.Click += ButtonSortByType_Click;
+            // 
             // FormBusCollection
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -344,5 +370,7 @@
         private ToolStripMenuItem loadToolStripMenuItem;
         private SaveFileDialog saveFileDialog;
         private OpenFileDialog openFileDialog;
+        private Button buttonSortByColor;
+        private Button buttonSortByType;
     }
 }

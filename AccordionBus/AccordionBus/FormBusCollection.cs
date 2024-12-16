@@ -156,7 +156,7 @@ public partial class FormBusCollection : Form
         listBoxCollection.Items.Clear();
         for (int i = 0; i < _storageCollection.Keys?.Count; ++i)
         {
-            string? colName = _storageCollection.Keys?[i];
+            string? colName = _storageCollection.Keys?[i].Name;
             if (!string.IsNullOrEmpty(colName))
             {
                 listBoxCollection.Items.Add(colName);
@@ -164,6 +164,7 @@ public partial class FormBusCollection : Form
         }
 
     }
+
     private void buttonCollectionAdd_Click(object sender, EventArgs e)
     {
         if (string.IsNullOrEmpty(textBoxCollectionName.Text) || (!radioButtonList.Checked && !radioButtonMassive.Checked))
@@ -277,5 +278,35 @@ public partial class FormBusCollection : Form
                 _logger.LogError("Ошибка: {Message}", ex.Message);
             }
         }
+    }
+
+    /// <summary>
+    /// Сортировка по типу
+    /// </summary>
+    private void ButtonSortByType_Click(object sender, EventArgs e)
+    {
+        CompareCars(new BusCompareByType());
+    }
+
+    /// <summary>
+    /// Сортировка по цвету
+    /// </summary>
+    private void ButtonSortByColor_Click(object sender, EventArgs e)
+    {
+        CompareCars(new BusCompareByColor());
+    }
+
+    /// <summary>
+    /// Сортировка по сравнителю
+    /// </summary>
+    /// <param name="comparer">Сравнитель объектов</param>
+    private void CompareCars(IComparer<DrawningBus?> comparer)
+    {
+        if (_company == null)
+        {
+            return;
+        }
+        _company.Sort(comparer);
+        pictureBox.Image = _company.Show();
     }
 }

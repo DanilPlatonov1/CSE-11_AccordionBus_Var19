@@ -13,19 +13,19 @@ public class StorageCollection<T> where T : DrawningBus
     /// <summary>
     /// Словарь (хранилище) с коллекциями
     /// </summary>
-    readonly Dictionary<string, ICollectionGenericObjects<T>> _storages;
+    readonly Dictionary<CollectionInfo, ICollectionGenericObjects<T>> _storages;
 
     /// <summary>
     /// Возвращение списка названий коллекций
     /// </summary>
-    public List<string> Keys => _storages.Keys.ToList();
+    public List<CollectionInfo> Keys => _storages.Keys.ToList();
 
     /// <summary>
     /// Конструктор
     /// </summary>
     public StorageCollection()
     {
-        _storages = new Dictionary<string, ICollectionGenericObjects<T>>();
+        _storages = new Dictionary<CollectionInfo, ICollectionGenericObjects<T>>();
     }
 
     /// <summary>
@@ -35,21 +35,17 @@ public class StorageCollection<T> where T : DrawningBus
     /// <param name="collectionType">тип коллекции</param>
     public void AddCollection(string name, CollectionType collectionType)
     {
-        if (string.IsNullOrEmpty(name) || _storages.ContainsKey(name))
-        {
-            return;
-        }
-        switch (collectionType)
-        {
-            case CollectionType.Massive:
-                _storages[name] = new MassiveGenericObjects<T>();
-                break;
-            case CollectionType.List:
-                _storages[name] = new ListGenericObjects<T>();
-                break;
-            default:
-                return;
-        }
+        CollectionInfo collectionInfo = new CollectionInfo(name, collectionType, string.Empty);
+
+        if (_storages.ContainsKey(collectionInfo)) return;
+
+        if (collectionType == CollectionType.None) return;
+
+        else if (collectionType == CollectionType.Massive)
+            _storages[collectionInfo] = new MassiveGenericObjects<T>();
+
+        else if (collectionType == CollectionType.List)
+            _storages[collectionInfo] = new ListGenericObjects<T>();
     }
 
     /// <summary>
@@ -58,11 +54,9 @@ public class StorageCollection<T> where T : DrawningBus
     /// <param name="name">Название коллекции</param>
     public void DelCollection(string name)
     {
-        if (_storages.ContainsKey(name))
-        {
-            _storages.Remove(name);
-        }
-
+        CollectionInfo collectionInfo = new CollectionInfo(name, CollectionType.None, string.Empty);
+        if (_storages.ContainsKey(collectionInfo))
+            _storages.Remove(collectionInfo);
     }
 
     /// <summary>
@@ -70,14 +64,14 @@ public class StorageCollection<T> where T : DrawningBus
     /// </summary>
     /// <param name="name">Название коллекции</param>
     /// <returns></returns>
-    public ICollectionGenericObjects<T>? this[string name]
+    public ICollectionGenericObjects<T> this[string name]
     {
         get
         {
-            if (_storages.ContainsKey(name))
-            {
-                return _storages[name];
-            }
+            CollectionInfo collectionInfo = new CollectionInfo(name, CollectionType.None, string.Empty);
+            if (_storages.ContainsKey(collectionInfo))
+                return _storages[collectionInfo];
+
             return null;
         }
     }
@@ -110,35 +104,30 @@ public class StorageCollection<T> where T : DrawningBus
         if (File.Exists(filename))
             File.Delete(filename);
 
-        using FileStream fs = new(filename, FileMode.Create);
-        using StreamWriter sw = new(fs);
-        sw.Write(_collectionKey);
-        foreach (KeyValuePair<string, ICollectionGenericObjects<T>> value in _storages)
+        using (StreamWriter writer = new StreamWriter(filename))
         {
-            sw.Write(Environment.NewLine);
-            if (value.Value.Count == 0)
+            writer.Write(_collectionKey);
+            foreach (KeyValuePair<CollectionInfo, ICollectionGenericObjects<T>> value in _storages)
             {
-                continue;
-            }
-
-            sw.Write(value.Key);
-            sw.Write(_separatorForKeyValue);
-            sw.Write(value.Value.GetCollectionType);
-            sw.Write(_separatorForKeyValue);
-            sw.Write(value.Value.MaxCount);
-            sw.Write(_separatorForKeyValue);
-
-            foreach (T? item in value.Value.GetItems())
-            {
-                string data = item?.GetDataForSave() ?? string.Empty;
-                if (string.IsNullOrEmpty(data))
-                {
+                StringBuilder sb = new();
+                sb.Append(Environment.NewLine);
+                if (value.Value.Count == 0)
                     continue;
+                sb.Append(value.Key);
+                sb.Append(_separatorForKeyValue);
+                sb.Append(value.Value.MaxCount);
+                sb.Append(_separatorForKeyValue);
+                foreach (T? item in value.Value.GetItems())
+                {
+                    string data = item?.GetDataForSave() ?? string.Empty;
+                    if (string.IsNullOrEmpty(data))
+                        continue;
+                    sb.Append(data);
+                    sb.Append(_separatorItems);
                 }
-
-                sw.Write(data);
-                sw.Write(_separatorItems);
+                writer.Write(sb);
             }
+
         }
     }
 
@@ -152,48 +141,48 @@ public class StorageCollection<T> where T : DrawningBus
         if (!File.Exists(filename))
             throw new Exception("Файл не существует");
 
-        using FileStream fs = new(filename, FileMode.Open);
-        using StreamReader sr = new(fs);
-
-        string str = sr.ReadLine();
-        if (str == null || str.Length == 0)
-            throw new Exception("В файле нет данных");
-
-        if (!str.Equals(_collectionKey))
-            throw new Exception("В файле неверные данные");
-
-        _storages.Clear();
-
-        while (!sr.EndOfStream)
+        using (StreamReader fs = File.OpenText(filename))
         {
-            string[] record = sr.ReadLine().Split(_separatorForKeyValue, StringSplitOptions.RemoveEmptyEntries);
-            if (record.Length != 4)
-                continue;
+            string str = fs.ReadLine();
+            if (str == null || str.Length == 0)
+                throw new Exception("В файле нет данных");
 
-            CollectionType collectionType = (CollectionType)Enum.Parse(typeof(CollectionType), record[1]);
-            ICollectionGenericObjects<T>? collection = StorageCollection<T>.CreateCollection(collectionType);
+            if (!str.StartsWith(_collectionKey))
+                throw new Exception("В файле неверные данные");
 
-            if (collection == null)
-                throw new Exception("Не удалось создать коллекцию");
-            collection.MaxCount = Convert.ToInt32(record[2]);
-
-            string[] set = record[3].Split(_separatorItems, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string elem in set)
+            _storages.Clear();
+            string strs = "";
+            while ((strs = fs.ReadLine()) != null)
             {
-                if (elem?.CreateDrawningBus() is T bus)
+                string[] record = strs.Split(_separatorForKeyValue, StringSplitOptions.RemoveEmptyEntries);
+                if (record.Length != 3)
+                    continue;
+                CollectionInfo? collectionInfo = CollectionInfo.GetCollectionInfo(record[0]) ?? throw new Exception("Не удалось определить информацию коллекции: " + record[0]);
+
+                ICollectionGenericObjects<T>? collection = StorageCollection<T>.CreateCollection(collectionInfo.CollectionType);
+                if (collection == null)
+                    throw new Exception("Не удалось создать коллекцию");
+                collection.MaxCount = Convert.ToInt32(record[1]);
+                string[] set = record[2].Split(_separatorItems, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string elem in set)
                 {
-                    try
+                    if (elem?.CreateDrawningBus() is T bus)
                     {
-                        if (collection.Insert(bus) == -1)
-                            throw new Exception("Объект не удалось добавить в коллекцию: " + record[3]);
-                    }
-                    catch (CollectionOverflowException ex)
-                    {
-                        throw new Exception("Коллекция переполнена", ex);
+                        try
+                        {
+                            if (collection.Insert(bus) == -1)
+                            {
+                                throw new Exception("Объект не удалось добавить в коллекцию: " + record[3]);
+                            }
+                        }
+                        catch (CollectionOverflowException ex)
+                        {
+                            throw new Exception("Коллекция переполнена", ex);
+                        }
                     }
                 }
+                _storages.Add(collectionInfo, collection);
             }
-            _storages.Add(record[0], collection);
         }
     }
 

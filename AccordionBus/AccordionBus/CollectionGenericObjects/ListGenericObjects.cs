@@ -1,10 +1,6 @@
-﻿using AccordionBus.Exeptions;
+﻿using AccordionBus.Drawnings;
+using AccordionBus.Exeptions;
 using ProjectAccordionBus.CollectionGenericObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AccordionBus.CollectionGenericObjects;
 
@@ -43,12 +39,13 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
         }
         else
         {
+            return null;
             throw new PositionOutOfCollectionException(position);
         }
 
     }
 
-    public int Insert(T obj)
+    public int Insert(T obj, IEqualityComparer<DrawningBus?>? comparer = null)
     {
         if (Count == _maxCount)
             throw new CollectionOverflowException(Count);
@@ -56,7 +53,7 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
         return Count;
     }
 
-    public int Insert(T obj, int position)
+    public int Insert(T obj, int position, IEqualityComparer<DrawningBus?>? comparer = null)
     {
         if (position < 0 || position >= Count || Count == _maxCount)
             throw new PositionOutOfCollectionException(position);
@@ -85,5 +82,10 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
         {
             yield return _collection[i];
         }
+    }
+
+    void ICollectionGenericObjects<T>.CollectionSort(IComparer<T?> comparer)
+    {
+        _collection.Sort(comparer);
     }
 }
