@@ -66,6 +66,7 @@ public class CollectionInfo : IEquatable<CollectionInfo>
     public override bool Equals(object? obj)
     {
         return Equals(obj as CollectionInfo);
+        throw new NotImplementedException();
     }
     public override int GetHashCode()
     {

@@ -36,7 +36,7 @@ public abstract class AbstractCompany
     /// <summary>
     /// Вычисление максимального количества элементов, который можно разместить в окне
     /// </summary>
-    private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _placeSizeHeight);
+    private int GetMaxCount => _pictureWidth * _pictureHeight / (_placeSizeWidth * _placeSizeHeight) - 5;
 
     /// <summary>
     /// Конструктор

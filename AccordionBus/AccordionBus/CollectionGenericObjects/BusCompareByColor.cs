@@ -1,4 +1,5 @@
 ﻿using AccordionBus.Drawnings;
+using AccordionBus.Entities;
 
 namespace AccordionBus.CollectionGenericObjects;
 
@@ -9,30 +10,54 @@ public class BusCompareByColor : IComparer<DrawningBus?>
 {
     public int Compare(DrawningBus? x, DrawningBus? y)
     {
-        if (x == null || x.EntityBus == null)
+        // Обработка случаев, когда x и y равны null
+        if (x == null && y == null) return 0;
+        if (x == null) return -1; // null считается меньше любого значения
+        if (y == null) return 1;
+
+        // Обработка случаев, когда EntityBus равен null
+        if (x.EntityBus == null && y.EntityBus == null) return 0;
+        if (x.EntityBus == null) return -1;
+        if (y.EntityBus == null) return 1;
+
+        // Сравнение по BodyColor.Name
+        int colorComparison = string.Compare(x.EntityBus.BodyColor.Name, y.EntityBus.BodyColor.Name, StringComparison.Ordinal);
+        if (colorComparison != 0)
         {
-            throw new ArgumentNullException(nameof(x));
+            return colorComparison;
         }
 
-        if (y == null || y.EntityBus == null)
+        // Сравнение по типу (с использованием полного имени)
+        if (x.GetType() != y.GetType())
         {
-            throw new ArgumentNullException(nameof(y));
+            return string.Compare(x.GetType().FullName, y.GetType().FullName, StringComparison.Ordinal);
         }
 
-        var bodycolorCompare = x.EntityBus.BodyColor.Name.CompareTo(y.EntityBus.BodyColor.Name);
-
-        if (bodycolorCompare != 0)
+        // Если оба объекта являются DrawningAccordionBus, сравниваем AdditionalColor
+        if (x is DrawningAccordionBus && y is DrawningAccordionBus)
         {
-            return bodycolorCompare;
+            var entityX = x.EntityBus as EntityAccordionBus;
+            var entityY = y.EntityBus as EntityAccordionBus;
+
+            if (entityX != null && entityY != null)
+            {
+                int additionalColorComparison = string.Compare(entityX.AdditionalColor.Name, entityY.AdditionalColor.Name, StringComparison.Ordinal);
+                if (additionalColorComparison != 0)
+                {
+                    return additionalColorComparison;
+                }
+            }
         }
 
-        var speedCompare = x.EntityBus.Speed.CompareTo(y.EntityBus.Speed);
-
-        if (speedCompare != 0)
+        // Сравнение по скорости
+        int speedComparison = x.EntityBus.Speed.CompareTo(y.EntityBus.Speed);
+        if (speedComparison != 0)
         {
-            return speedCompare;
+            return speedComparison;
         }
 
+        // Сравнение по весу
         return x.EntityBus.Weight.CompareTo(y.EntityBus.Weight);
     }
+
 }

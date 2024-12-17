@@ -1,9 +1,4 @@
 ﻿using ProjectAccordionBus.CollectionGenericObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AccordionBus.Drawnings;
 
 namespace AccordionBus.CollectionGenericObjects;
@@ -34,6 +29,7 @@ public class BusStation : AbstractCompany
             
         }
     }
+
     protected override void SetObjectsPosition()
     {
         int posX = 0;

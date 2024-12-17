@@ -1,6 +1,7 @@
 ﻿using AccordionBus.Drawnings;
 using AccordionBus.Exeptions;
 using ProjectAccordionBus.CollectionGenericObjects;
+using System.Collections.Generic;
 
 namespace AccordionBus.CollectionGenericObjects;
 public class MassiveGenericObjects<T> : ICollectionGenericObjects<T>
@@ -117,5 +118,9 @@ where T : class
         }
     }
 
-    public void CollectionSort(IComparer<T?> comparer) { }
+    public void CollectionSort(IComparer<T?> comparer)
+    {
+        Array.Sort(_collection, comparer);
+        Array.Reverse(_collection);
+    }
 }

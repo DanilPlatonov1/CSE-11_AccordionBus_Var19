@@ -9,29 +9,31 @@ public class BusCompareByType : IComparer<DrawningBus?>
 {
     public int Compare(DrawningBus? x, DrawningBus? y)
     {
-        if (x == null || x.EntityBus == null)
+        // Обработка случаев, когда x и y равны null
+        if (x == null && y == null) return 0;
+        if (x == null) return -1;
+        if (y == null) return 1;
+
+        // Обработка случаев, когда EntityBus равен null
+        if (x.EntityBus == null && y.EntityBus == null) return 0;
+        if (x.EntityBus == null) return -1;
+        if (y.EntityBus == null) return 1;
+
+        // Сравнение типов объектов
+        var typeComparison = string.Compare(x.GetType().FullName, y.GetType().FullName, StringComparison.Ordinal);
+        if (typeComparison != 0)
         {
-            throw new ArgumentNullException(nameof(x));
+            return typeComparison;
         }
 
-        if (y == null || y.EntityBus == null)
+        // Сравнение по скорости
+        var speedComparison = x.EntityBus.Speed.CompareTo(y.EntityBus.Speed);
+        if (speedComparison != 0)
         {
-            throw new ArgumentNullException(nameof(y));
+            return speedComparison;
         }
 
-        if (x.GetType().Name != y.GetType().Name)
-        {
-            return x.GetType().Name.CompareTo(y.GetType().Name);
-        }
-
-        var speedCompare = x.EntityBus.Speed.CompareTo(y.EntityBus.Speed);
-
-        if (speedCompare != 0)
-        {
-            return speedCompare;
-        }
-
+        // Сравнение по весу
         return x.EntityBus.Weight.CompareTo(y.EntityBus.Weight);
     }
-
 }
