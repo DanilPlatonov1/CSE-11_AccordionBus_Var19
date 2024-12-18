@@ -87,5 +87,6 @@ public class ListGenericObjects<T> : ICollectionGenericObjects<T> where T : clas
     void ICollectionGenericObjects<T>.CollectionSort(IComparer<T?> comparer)
     {
         _collection.Sort(comparer);
+        _collection.Reverse();
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AccordionBus.MovementStrategy;
+﻿namespace AccordionBus.MovementStrategy;
 
 public class MoveToBorder : AbstractStrategy
 {
@@ -18,6 +12,7 @@ public class MoveToBorder : AbstractStrategy
         return objParams.RightBorder <= FieldWidth && objParams.RightBorder + GetStep() >= FieldWidth &&
         objParams.DownBorder <= FieldHeight && objParams.DownBorder + GetStep() >= FieldHeight;
     }
+
     protected override void MoveToTarget()
     {
         ObjectParameters? objParams = GetObjectParameters;
@@ -25,7 +20,9 @@ public class MoveToBorder : AbstractStrategy
         {
             return;
         }
+
         int diffX = objParams.ObjectMiddleHorizontal - FieldWidth;
+
         if (Math.Abs(diffX) > GetStep())
         {
             if (diffX > 0)
@@ -37,7 +34,9 @@ public class MoveToBorder : AbstractStrategy
                 MoveRight();
             }
         }
+
         int diffY = objParams.ObjectMiddleVertical - FieldHeight;
+
         if (Math.Abs(diffY) > GetStep())
         {
             if (diffY > 0)

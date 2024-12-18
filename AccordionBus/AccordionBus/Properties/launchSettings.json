@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AccordionBus": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

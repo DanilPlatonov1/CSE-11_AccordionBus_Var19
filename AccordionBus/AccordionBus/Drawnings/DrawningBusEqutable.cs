@@ -9,57 +9,47 @@ public class DrawiningBusEqutables : IEqualityComparer<DrawningBus?>
     {
         if (x == null || x.EntityBus == null)
         {
-            return false;
+            throw new ArgumentNullException(nameof(x));
         }
-
         if (y == null || y.EntityBus == null)
         {
-            return false;
+            throw new ArgumentNullException(nameof(y));
         }
-
         if (x.GetType().Name != y.GetType().Name)
         {
             return false;
         }
-
         if (x.EntityBus.Speed != y.EntityBus.Speed)
         {
             return false;
         }
-
         if (x.EntityBus.Weight != y.EntityBus.Weight)
         {
             return false;
         }
-
         if (x.EntityBus.BodyColor != y.EntityBus.BodyColor)
         {
             return false;
         }
-
         if (x is DrawningAccordionBus && y is DrawningAccordionBus)
         {
-            EntityAccordionBus _x = (EntityAccordionBus)x.EntityBus;
-            EntityAccordionBus _y = (EntityAccordionBus)x.EntityBus;
-            if (_x.AdditionalColor != _y.AdditionalColor)
+            EntityAccordionBus entityX = (EntityAccordionBus)x.EntityBus;
+            EntityAccordionBus entityY = (EntityAccordionBus)y.EntityBus;
+            if (entityX.AdditionalColor != entityY.AdditionalColor)
             {
                 return false;
             }
-
-            if (_x.BodyGarmoshka != _y.BodyGarmoshka)
+            if (entityX.BodyGarmoshka != entityY.BodyGarmoshka)
             {
                 return false;
             }
-
-            if (_x.BodyGlass != _y.BodyGlass)
+            if (entityX.BodyGlass != entityY.BodyGlass)
             {
                 return false;
             }
         }
-
         return true;
     }
-
     public int GetHashCode([DisallowNull] DrawningBus obj)
     {
         return obj.GetHashCode();

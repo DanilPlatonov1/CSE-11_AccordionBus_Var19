@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AccordionBus.MovementStrategy;
+﻿namespace AccordionBus.MovementStrategy;
 
 public class ObjectParameters
 {
@@ -12,42 +6,52 @@ public class ObjectParameters
     /// Координата X
     /// </summary>
     private readonly int _x;
+
     /// <summary>
     /// Координата Y
     /// </summary>
     private readonly int _y;
+
     /// <summary>
     /// Ширина объекта
     /// </summary>
     private readonly int _width;
+
     /// <summary>
     /// Высота объекта
     /// </summary>
     private readonly int _height;
+
     /// <summary>
     /// Левая граница
     /// </summary>
     public int LeftBorder => _x;
+
     /// <summary>
     /// Верхняя граница
     /// </summary>
     public int TopBorder => _y;
+
     /// <summary>
     /// Правая граница
     /// </summary>
     public int RightBorder => _x + _width;
+
     /// <summary>
     /// Нижняя граница
     /// </summary>
     public int DownBorder => _y + _height;
+
     /// <summary>
     /// Середина объекта
     /// </summary>
     public int ObjectMiddleHorizontal => _x + _width / 2;
+
     /// <summary>
     /// Середина объекта
     /// </summary>
     public int ObjectMiddleVertical => _y + _height / 2;
+
     /// <summary>
     /// Конструктор
     /// </summary>

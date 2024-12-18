@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AccordionBus.Entities;
+﻿namespace AccordionBus.Entities;
 public class EntityAccordionBus: EntityBus
 {
     /// <summary>
     /// Дополнительный цвет (для опциональных элементов)
     /// </summary>
     public Color AdditionalColor { get; private set; }
+
     /// <summary>
     /// Признак (опция) наличия стёкол
     /// </summary>
     public bool BodyGlass { get; private set; }
+
     /// <summary>
     /// признак наличия гармошки
     /// </summary>
@@ -33,6 +29,7 @@ public class EntityAccordionBus: EntityBus
         BodyGlass = glass;
         BodyGarmoshka = garmoshka;
     }
+
     /// <summary>
     /// Перегрузка конструктора для создания базового автобуса в коллекцию
     /// </summary>

@@ -10,7 +10,6 @@ namespace AccordionBus.Entities;
 /// <summary>
 /// Класс-сущность автобус
 /// </summary>
-
 public class EntityBus
 {
     /// <summary>
@@ -27,7 +26,6 @@ public class EntityBus
     /// Основной цвет
     /// </summary>
     public Color BodyColor { get; private set; }
-
 
     /// <summary>
     /// Шаг перемещения автомобиля

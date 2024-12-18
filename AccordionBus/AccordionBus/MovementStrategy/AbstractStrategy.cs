@@ -1,32 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AccordionBus.MovementStrategy;
+﻿namespace AccordionBus.MovementStrategy;
 public abstract class AbstractStrategy
 {
     /// <summary>
     /// Перемещаемый объект
     /// </summary>
     private IMoveableObject? _moveableObject;
+
     /// <summary>
     /// Статус перемещения
     /// </summary>
     private StrategyStatus _state = StrategyStatus.NotInit;
+
     /// <summary>
     /// Ширина поля
     /// </summary>
     protected int FieldWidth { get; private set; }
+
     /// <summary>
     /// Высота поля
     /// </summary>
     protected int FieldHeight { get; private set; }
+
     /// <summary>
     /// Статус перемещения
     /// </summary>
     public StrategyStatus GetStatus() { return _state; }
+
     /// <summary>
     /// Установка данных
     /// </summary>
@@ -45,6 +44,7 @@ public abstract class AbstractStrategy
         FieldWidth = width;
         FieldHeight = height;
     }
+
     /// <summary>
     /// Шаг перемещения
     /// </summary>
@@ -65,27 +65,31 @@ public abstract class AbstractStrategy
     /// Перемещение влево
     /// </summary>
     /// <returns>Результат перемещения (true - удалось переместиться, false - неудача)</returns>
-protected bool MoveLeft() => MoveTo(MovementDirection.Left);
+    protected bool MoveLeft() => MoveTo(MovementDirection.Left);
+
     /// <summary>
     /// Перемещение вправо
     /// </summary>
     /// <returns>Результат перемещения (true - удалось переместиться, false - неудача)</returns>
-protected bool MoveRight() => MoveTo(MovementDirection.Right);
+    protected bool MoveRight() => MoveTo(MovementDirection.Right);
+
     /// <summary>
     /// Перемещение вверх
     /// </summary>
     /// <returns>Результат перемещения (true - удалось переместиться, false - неудача)</returns>
-protected bool MoveUp() => MoveTo(MovementDirection.Up);
+    protected bool MoveUp() => MoveTo(MovementDirection.Up);
+
     /// <summary>
     /// Перемещение вниз
     /// </summary>
     /// <returns>Результат перемещения (true - удалось переместиться, false -неудача)</returns>
-protected bool MoveDown() => MoveTo(MovementDirection.Down);
+    protected bool MoveDown() => MoveTo(MovementDirection.Down);
+
     /// <summary>
     /// Параметры объекта
     /// </summary>
-    protected ObjectParameters? GetObjectParameters =>
-    _moveableObject?.GetObjectPosition;
+    protected ObjectParameters? GetObjectParameters => _moveableObject?.GetObjectPosition;
+
     /// <summary>
     /// Шаг объекта
     /// </summary>
@@ -98,21 +102,24 @@ protected bool MoveDown() => MoveTo(MovementDirection.Down);
         }
         return _moveableObject?.GetStep;
     }
+
     /// <summary>
     /// Перемещение к цели
     /// </summary>
     protected abstract void MoveToTarget();
+
     /// <summary>
     /// Достигнута ли цель
     /// </summary>
     /// <returns></returns>
     protected abstract bool IsTargetDestinaion();
+        
     /// <summary>
     /// Попытка перемещения в требуемом направлении
     /// </summary>
     /// <param name="movementDirection">Направление</param>
     /// <returns>Результат попытки (true - удалось переместиться, false - неудача)</returns>
-private bool MoveTo(MovementDirection movementDirection)
+    private bool MoveTo(MovementDirection movementDirection)
     {
         if (_state != StrategyStatus.InProgress)
         {

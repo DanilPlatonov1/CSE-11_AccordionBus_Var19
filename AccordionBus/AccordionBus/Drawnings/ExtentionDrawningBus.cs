@@ -1,10 +1,5 @@
 ﻿using AccordionBus.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace AccordionBus.Drawnings;
 
 public static class ExtentionDrawningBus
@@ -13,6 +8,7 @@ public static class ExtentionDrawningBus
     /// Разделитель для записи информации по объекту в файл
     /// </summary>
     private static readonly string _separatorForObject = ":";
+
     /// <summary>
     /// Создание объекта из строки
     /// </summary>
@@ -33,6 +29,7 @@ public static class ExtentionDrawningBus
         }
         return null;
     }
+
     /// <summary>
     /// Получение данных для сохранения в файл
     /// </summary>

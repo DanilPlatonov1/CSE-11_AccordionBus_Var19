@@ -11,7 +11,7 @@ public abstract class AbstractCompany
     /// <summary>
     /// Размер места (ширина)
     /// </summary>
-    protected readonly int _placeSizeWidth = 240;
+    protected readonly int _placeSizeWidth = 250;
 
     /// <summary>
     /// Размер места (высота)
@@ -29,7 +29,7 @@ public abstract class AbstractCompany
     protected readonly int _pictureHeight;
 
     /// <summary>
-    /// Коллекция автомобилей
+    /// Коллекция автобусов
     /// </summary>
     protected ICollectionGenericObjects<DrawningBus>? _collection = null;
 
@@ -56,7 +56,7 @@ public abstract class AbstractCompany
     /// Перегрузка оператора сложения для класса
     /// </summary>
     /// <param name="company">Компания</param>
-    /// <param name="car">Добавляемый объект</param>
+    /// <param name="bus">Добавляемый объект</param>
     /// <returns></returns>
     public static bool operator +(AbstractCompany company, DrawningBus bus)
     {

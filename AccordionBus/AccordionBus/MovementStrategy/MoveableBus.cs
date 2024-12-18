@@ -1,9 +1,4 @@
 ﻿using AccordionBus.Drawnings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AccordionBus.MovementStrategy;
 
@@ -13,6 +8,7 @@ public class MoveableBus:IMoveableObject
     /// Поле-объект класса DrawningBus или его наследника
     /// </summary>
     private readonly DrawningBus? _bus = null;
+
     /// <summary>
     /// Конструктор
     /// </summary>
@@ -25,16 +21,16 @@ public class MoveableBus:IMoveableObject
     {
         get
         {
-            if (_bus == null || _bus.EntityBus == null ||
-            !_bus.GetPosX.HasValue || !_bus.GetPosY.HasValue)
+            if (_bus == null || _bus.EntityBus == null || !_bus.GetPosX.HasValue || !_bus.GetPosY.HasValue)
             {
                 return null;
             }
-            return new ObjectParameters(_bus.GetPosX.Value,
-            _bus.GetPosY.Value, _bus.GetWidth, _bus.GetHeight);
+            return new ObjectParameters(_bus.GetPosX.Value, _bus.GetPosY.Value, _bus.GetWidth, _bus.GetHeight);
         }
     }
+
     public int GetStep => (int)(_bus?.EntityBus?.Step ?? 0);
+
     public bool TryMoveObject(MovementDirection direction)
     {
         if (_bus == null || _bus.EntityBus == null)
@@ -43,6 +39,7 @@ public class MoveableBus:IMoveableObject
         }
         return _bus.MoveTransport(GetDirectionType(direction));
     }
+
     /// <summary>
     /// Конвертация из MovementDirection в DirectionType
     /// </summary>
